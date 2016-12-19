@@ -10,9 +10,11 @@ public class EnterpriseCloud implements CloudService {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Override
-	public void provisioning() {
+	public Boolean provisioning() {
 		// TODO Auto-generated method stub
 		logger.debug("provisioning() called!");
+		
+		return Boolean.TRUE;
 	}
 
 }

@@ -1,24 +1,53 @@
 package th.co.ais.enterprisecloud.automation;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import static org.mockito.Mockito.when;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import th.co.ais.enterprisecloud.service.CloudService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)
 public class LazybeeApplicationTests {
 
+	@Value("${local.server.port}")
+    private int port;
+		
 	@Autowired
     private TestRestTemplate restTemplate;
 	
+	@MockBean
+	private CloudService service;
+	
+	@Before
+    public void setup() {
+		when(this.service.provisioning()).thenReturn(Boolean.TRUE);
+	}
+	
 	@Test
 	public void testProvisioningService() {
-		//this.restTemplate.postForEntity(url, request, responseType)
-		//Greet greet = this.restTemplate.getForObject("/", Greet.class);
+		
+		String body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><organization name=\"Virgin Media Limited\" orderId=\"09101010102939\" orderType=\"trial\" shortName=\"VMED\" xmlns=\"http://enterprisecloud.ais.co.th/bot\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><users><user email=\"john.doe@virgin.com\" fullName=\"John Doe\" phone=\"0613952200\" /></users><vms><vm coresPerSocket=\"2\" memorySize=\"4\" noOfCpus=\"2\" nonMobileNumber=\"1234567890\" osImageName=\"CENTOS7\" /></vms></organization>";
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_XML);
+		headers.add("Accept-Charset", "UTF-8");
+		
+		HttpEntity<String> request = new HttpEntity<>(body, headers);
+		ResponseEntity<String> response = this.restTemplate.postForEntity("http://localhost:" + port + "/provisioning", request, String.class);
+		
 		//assertEquals("Hello World!", greet.getMessage());
 	}
 

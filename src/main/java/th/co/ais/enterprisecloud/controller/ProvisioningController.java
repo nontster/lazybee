@@ -33,11 +33,9 @@ public class ProvisioningController {
 	@ResponseBody
 	public HttpEntity<OrganizationType> provisioning(@RequestBody OrganizationType organization) {
 		
+		logger.debug("calling service.provisioning()");
 		service.provisioning();	
-		
-/*		Organization org = new Organization("COMPANY", "Organization for COMPANY.COM",
-				"COMPANY.COM");*/
-		
+				
 		//org.add(linkTo(methodOn(ProvisioningController.class).provisioning(param)).withSelfRel());
 
 		return new ResponseEntity<OrganizationType>(organization, HttpStatus.OK);

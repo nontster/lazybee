@@ -8,18 +8,38 @@
 		</encoder>
 	</appender>
 	<!-- Need appender to write to file -->
-	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<!-- Name of the file where the log messages are written -->
 		<file>logs/lazybee.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<fileNamePattern>logs/lazybee.%i.log.zip</fileNamePattern>
+			<minIndex>1</minIndex>
+			<maxIndex>100</maxIndex>
+		</rollingPolicy>
+
+	<triggeringPolicy
+		class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+		<maxFileSize>1MB</maxFileSize>
+	</triggeringPolicy>
 		<encoder>
 			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
 			</pattern>
 		</encoder>
 	</appender>
-	<logger name="th.co.ais.enterprisecloud" level="DEBUG" additivity="false">
-		<appender-ref ref="FILE" />
-	</logger>
 
+	<springProfile name="dev,staging">
+		<logger name="th.co.ais.enterprisecloud" level="DEBUG" additivity="false">
+			<appender-ref ref="FILE" />
+		</logger>
+	</springProfile>
+
+	<springProfile name="production">
+		<logger name="th.co.ais.enterprisecloud" level="WARN" additivity="false">
+			<appender-ref ref="FILE" />
+		</logger>
+	</springProfile>
+	
+	
 	<!-- Setting the root level of logging to INFO -->
 	<root level="INFO">
 		<appender-ref ref="FILE" />

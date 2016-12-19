@@ -18,6 +18,8 @@ public class LazybeeApplicationTests {
 	@Test
 	public void testProvisioningService() {
 		//this.restTemplate.postForEntity(url, request, responseType)
+		//Greet greet = this.restTemplate.getForObject("/", Greet.class);
+		//assertEquals("Hello World!", greet.getMessage());
 	}
 
 }

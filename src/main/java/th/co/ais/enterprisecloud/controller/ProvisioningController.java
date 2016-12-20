@@ -28,7 +28,6 @@ public class ProvisioningController {
 		this.service = service;
 	}
 
-
 	@RequestMapping(value="/provisioning", method=RequestMethod.POST)
 	@ResponseBody
 	public HttpEntity<OrganizationType> provisioning(@RequestBody OrganizationType organization) {
@@ -38,6 +37,6 @@ public class ProvisioningController {
 				
 		//org.add(linkTo(methodOn(ProvisioningController.class).provisioning(param)).withSelfRel());
 
-		return new ResponseEntity<OrganizationType>(organization, HttpStatus.OK);
+		return new ResponseEntity<OrganizationType>(organization, HttpStatus.OK); 
 	}
 }

@@ -1,12 +1,1 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<organization name="Virgin Media Limited" orderId="09101010102939"
-	orderType="trial" shortName="VMED" xmlns="http://enterprisecloud.ais.co.th/bot"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<users>
-		<user email="john.doe@virgin.com" fullName="John Doe" phone="0613952200" />
-	</users>
-	<vms>
-		<vm coresPerSocket="2" memorySize="4" noOfCpus="2" nonMobileNumber="1234567890"
-			osImageName="CENTOS7" />
-	</vms>
-</organization>
+﻿<?xml version="1.0" encoding="UTF-8"?><organization name="Virgin Media Limited" orderId="09101010102939" orderType="trial" shortName="VMED" xmlns="http://enterprisecloud.ais.co.th/bot" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><users><user email="john.doe@virgin.com" fullName="John Doe" phone="0613952200" /></users><vms><vm coresPerSocket="2" memorySize="4" noOfCpus="2" nonMobileNumber="1234567890" osImageName="CENTOS7" /></vms></organization>

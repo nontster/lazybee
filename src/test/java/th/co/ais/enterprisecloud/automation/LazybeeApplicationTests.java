@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,8 +16,10 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import th.co.ais.enterprisecloud.model.request.OrganizationType;
 import th.co.ais.enterprisecloud.service.CloudService;
 
 @RunWith(SpringRunner.class)
@@ -33,8 +36,10 @@ public class LazybeeApplicationTests {
 	private CloudService service;
 	
 	@Before
-    public void setup() {
-		when(this.service.provisioning()).thenReturn(Boolean.TRUE);
+    public void setup() throws InterruptedException {
+		OrganizationType org = new OrganizationType();
+
+		when(this.service.provisioning(org)).thenReturn(new AsyncResult<>(Boolean.TRUE));
 	}
 	
 	@Test
@@ -49,7 +54,7 @@ public class LazybeeApplicationTests {
 		HttpEntity<String> request = new HttpEntity<>(body, headers);
 		ResponseEntity<String> response = this.restTemplate.postForEntity("http://localhost:" + port + "/provisioning", request, String.class);
 		
-		//assertEquals("Hello World!", greet.getMessage());
+		assertTrue(Boolean.TRUE);
 	}
 
 }

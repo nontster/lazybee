@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,8 +20,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.vmware.vcloud.sdk.VCloudException;
+
 import th.co.ais.enterprisecloud.model.request.OrganizationType;
+import th.co.ais.enterprisecloud.service.CloudConfiguration;
 import th.co.ais.enterprisecloud.service.CloudService;
+import th.co.ais.enterprisecloud.service.VCloudDirectorService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)
@@ -35,10 +40,14 @@ public class LazybeeApplicationTests {
 	@MockBean
 	private CloudService service;
 	
+	@MockBean
+	private CloudConfiguration conf;
+	
 	@Before
     public void setup() throws InterruptedException {
 		OrganizationType org = new OrganizationType();
-
+		
+		service = mock(VCloudDirectorService.class);
 		when(this.service.provisioning(org)).thenReturn(new AsyncResult<>(Boolean.TRUE));
 	}
 	

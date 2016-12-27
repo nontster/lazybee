@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://enterprisecloud.ais.co.th/bot" xmlns="http://enterprisecloud.ais.co.th/bot" elementFormDefault="qualified">
+
+    <xs:include schemaLocation=""></xs:include>
+    <xs:complexType name="VmsType">
+    	<xs:sequence>
+    		<xs:element name="vm" type="VmType" minOccurs="1" maxOccurs="unbounded"></xs:element>
+    	</xs:sequence>
+    </xs:complexType>
+    
+        <xs:complexType name="UsersType">
+    	<xs:sequence>
+    		<xs:element name="user" type="UserType" minOccurs="1" maxOccurs="unbounded"></xs:element>
+    	</xs:sequence>
+    </xs:complexType>
+
+        <xs:complexType name="UserType">
+        	<xs:attribute name="fullName" type="xs:string"
+        		use="required">
+        	</xs:attribute>
+        	<xs:attribute name="email" type="xs:string"
+        		use="required">
+        	</xs:attribute>
+        	<xs:attribute name="phone" type="xs:string"
+        		use="required">
+        	</xs:attribute>
+        	<xs:attribute name="username" type="xs:string"></xs:attribute>
+        	<xs:attribute name="password" type="xs:string"></xs:attribute>
+        </xs:complexType>
+
+        <xs:complexType name="VmType">
+    	<xs:attribute name="nonMobileNumber" use="required">
+    		<xs:simpleType>
+    			<xs:restriction base="xs:string"></xs:restriction>
+    		</xs:simpleType>
+    	</xs:attribute>
+    	<xs:attribute name="osImageName" type="xs:string"
+    		use="required">
+    	</xs:attribute>
+    	<xs:attribute name="noOfCpus" use="required">
+    		<xs:simpleType>
+    			<xs:restriction base="xs:int"></xs:restriction>
+    		</xs:simpleType>
+    	</xs:attribute>
+    	<xs:attribute name="coresPerSocket" use="required">
+    		<xs:simpleType>
+    			<xs:restriction base="xs:int"></xs:restriction>
+    		</xs:simpleType>
+    	</xs:attribute>
+    	<xs:attribute name="memorySize" use="required">
+    		<xs:simpleType>
+    			<xs:restriction base="xs:int"></xs:restriction>
+    		</xs:simpleType>
+    	</xs:attribute>
+    	<xs:attribute name="storageSize" use="optional">
+    		<xs:simpleType>
+    			<xs:restriction base="xs:int"></xs:restriction>
+    		</xs:simpleType>
+    	</xs:attribute>
+    	<xs:attribute name="vmName" type="xs:string" use="optional"></xs:attribute>
+    	<xs:attribute name="computerName" type="xs:string"
+    		use="optional">
+    	</xs:attribute>
+    	<xs:attribute name="start" type="xs:date"></xs:attribute>
+    	<xs:attribute name="end" type="xs:date"></xs:attribute>
+    </xs:complexType>
+
+
+    <xs:element name="organization" type="OrganizationType"></xs:element>
+    
+    <xs:complexType name="OrganizationType">
+        <xs:all>
+            <xs:element name="cloudResources" type="CloudResourcesType" minOccurs="0" maxOccurs="1">
+        	</xs:element>
+            <xs:element name="orgSettings" type="OrgSettingsType"
+        		minOccurs="0" maxOccurs="1">
+        	</xs:element>
+        	<xs:element name="users" type="UsersType" minOccurs="1"
+        		maxOccurs="1">
+        	</xs:element>
+        	<xs:element name="vdc" type="VdcType" minOccurs="0"
+        		maxOccurs="1">
+        	</xs:element>
+        	<xs:element name="edgeGateway" type="EdgeGatewayType"
+        		minOccurs="0" maxOccurs="1">
+        	</xs:element>
+        	<xs:element name="orgVdcNetwork" type="OrgVdcNetworkType"
+        		minOccurs="0" maxOccurs="1">
+        	</xs:element>
+        	<xs:element name="vApp" type="VAppType" minOccurs="1" maxOccurs="1"></xs:element>
+        </xs:all>
+
+
+
+        <xs:attribute name="orderId" type="xs:string" use="required"></xs:attribute>
+    	<xs:attribute name="name" use="required">
+    		<xs:simpleType>
+    			<xs:restriction base="xs:string">
+    				<xs:minLength value="3"></xs:minLength>
+    				<xs:maxLength value="512"></xs:maxLength>
+    			</xs:restriction>
+    		</xs:simpleType>
+    	</xs:attribute>
+    	<xs:attribute name="description" type="xs:string"></xs:attribute>
+    	<xs:attribute name="orderType" use="required">
+    		<xs:simpleType>
+    			<xs:restriction base="xs:string">
+    				<xs:enumeration value="trial"></xs:enumeration>
+    				<xs:enumeration value="standard"></xs:enumeration>
+    				<xs:enumeration value="customize"></xs:enumeration>
+    			</xs:restriction>
+    		</xs:simpleType>
+    	</xs:attribute>
+    	<xs:attribute name="caNumber" type="xs:string" use="optional"></xs:attribute>
+    	<xs:attribute name="shortName" use="required">
+    		<xs:simpleType>
+    			<xs:restriction base="xs:string">
+    				<xs:minLength value="3"></xs:minLength>
+    				<xs:maxLength value="64"></xs:maxLength>
+    			</xs:restriction>
+    		</xs:simpleType>
+    	</xs:attribute>
+    	<xs:attribute name="url" type="xs:string"></xs:attribute>
+    </xs:complexType>
+
+
+
+    
+    <xs:complexType name="OrgSettingsType">
+        <xs:all>
+    		<xs:element name="orgLeaseSettings" type="OrgLeaseSettingsType" minOccurs="0" maxOccurs="1">
+    		</xs:element>
+    		<xs:element name="orgGeneralSettings" type="OrgGeneralSettingsType" minOccurs="0" maxOccurs="1">
+    		</xs:element>
+    		<xs:element name="orgVAppTemplateLeaseSettings" type="OrgVAppTemplateLeaseSettingsType" minOccurs="0" maxOccurs="1">
+    		</xs:element>
+    		<xs:element name="orgPasswordPolicySettings" type="OrgPasswordPolicySettingsType" minOccurs="0" maxOccurs="1"></xs:element>
+    	</xs:all>
+    </xs:complexType>
+
+    <xs:complexType name="OrgLeaseSettingsType">
+    	<xs:attribute name="deleteOnStorageLeaseExpiration"
+    		type="xs:boolean">
+    	</xs:attribute>
+    	<xs:attribute name="deploymentLeaseSeconds" type="xs:int"></xs:attribute>
+    	<xs:attribute name="storageLeaseSeconds" type="xs:int"></xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="OrgGeneralSettingsType">
+    	<xs:attribute name="storedVmQuota" type="xs:int"></xs:attribute>
+    	<xs:attribute name="deployedVMQuota" type="xs:int"></xs:attribute>
+    	<xs:attribute name="canPublishCatalogs" type="xs:boolean"></xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="OrgVAppTemplateLeaseSettingsType">
+    	<xs:attribute name="deleteOnStorageLeaseExpiration"
+    		type="xs:boolean">
+    	</xs:attribute>
+    	<xs:attribute name="storageLeaseSeconds" type="xs:int"></xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="OrgPasswordPolicySettingsType">
+    	<xs:attribute name="accountLockoutEnabled" type="xs:string"></xs:attribute>
+    	<xs:attribute name="accountLockoutIntervalMinutes"
+    		type="xs:string">
+    	</xs:attribute>
+    	<xs:attribute name="invalidLoginsBeforeLockout" type="xs:string"></xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="CloudResourcesType">
+        <xs:all>
+    		<xs:element name="providerVdc" type="ProviderVdcType" minOccurs="0" maxOccurs="1"></xs:element>
+    		<xs:element name="networkPool" type="NetworkPoolType" minOccurs="0" maxOccurs="1"></xs:element>
+    		<xs:element name="externalNetwork" type="ExternalNetworkType" minOccurs="0" maxOccurs="1">
+    		</xs:element>
+    		<xs:element name="catalog" type="CatalogType" minOccurs="0" maxOccurs="1"></xs:element>
+    	</xs:all>
+    </xs:complexType>
+    
+    <xs:complexType name="ProviderVdcType">
+    	<xs:attribute name="name" type="xs:string"></xs:attribute>
+    </xs:complexType>
+    
+    <xs:complexType name="NetworkPoolType">
+    	<xs:attribute name="name" type="xs:string"></xs:attribute>
+    </xs:complexType>
+    
+    <xs:complexType name="ExternalNetworkType">
+    	<xs:attribute name="name" type="xs:string"></xs:attribute>
+    </xs:complexType>
+    
+    <xs:complexType name="CatalogType">
+    	<xs:attribute name="name" type="xs:string"></xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="VdcType">
+        <xs:all>
+        	<xs:element name="computeCapacity" type="ComputeCapacityType" minOccurs="0" maxOccurs="1"></xs:element>
+        	<xs:element name="vdcStorageProfile" type="VdcStorageProfileType" minOccurs="0" maxOccurs="1"></xs:element>
+        </xs:all>
+        
+    	<xs:attribute name="name" type="xs:string"></xs:attribute>
+    	<xs:attribute name="description" type="xs:string"></xs:attribute>
+    	<xs:attribute name="enabled" type="xs:boolean"></xs:attribute>
+    	<xs:attribute name="resourceGuaranteedCpu" type="xs:float"></xs:attribute>
+    	<xs:attribute name="resourceGuaranteedMemory" type="xs:float"></xs:attribute>
+    	<xs:attribute name="vmQuota" type="xs:int"></xs:attribute>
+    	<xs:attribute name="networkQuota" type="xs:int"></xs:attribute>
+    </xs:complexType>
+    
+    <xs:complexType name="ComputeCapacityType">
+        <xs:all>
+    		<xs:element name="cpu" type="CpuType" minOccurs="0" maxOccurs="1"></xs:element>
+    		<xs:element name="memory" type="MemoryType" minOccurs="0" maxOccurs="1"></xs:element>
+    	</xs:all>
+    </xs:complexType>
+    
+    <xs:complexType name="CpuType">
+    	<xs:attribute name="allocated" type="xs:int"></xs:attribute>
+    	<xs:attribute name="overhead" type="xs:int"></xs:attribute>
+    	<xs:attribute name="units" type="xs:string"></xs:attribute>
+    	<xs:attribute name="used" type="xs:int"></xs:attribute>
+    	<xs:attribute name="limit" type="xs:int"></xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="MemoryType">
+    	<xs:complexContent>
+    		<xs:extension base="CpuType"></xs:extension>
+    	</xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="VdcStorageProfileType">
+    	<xs:attribute name="enabled" type="xs:boolean"></xs:attribute>
+    	<xs:attribute name="def" type="xs:boolean"></xs:attribute>
+    	<xs:attribute name="limit" type="xs:int"></xs:attribute>
+    	<xs:attribute name="units" type="xs:string"></xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="EdgeGatewayType">
+        <xs:all>
+    		<xs:element name="gatewayConfiguration" type="GatewayConfigurationType">
+    		</xs:element>
+    		<xs:element name="gatewayFeatures" type="GatewayFeaturesType"></xs:element>
+    	</xs:all>
+    	<xs:attribute name="name" type="xs:string"></xs:attribute>
+    	<xs:attribute name="description" type="xs:string"></xs:attribute>
+    </xs:complexType>
+    
+    <xs:complexType name="GatewayConfigurationType">
+        <xs:sequence>
+    		<xs:element name="gatewayInterface" type="GatewayInterfaceType" minOccurs="1" maxOccurs="unbounded">
+    		</xs:element>
+    	</xs:sequence>
+    	<xs:attribute name="haEnabled" type="xs:boolean"></xs:attribute>
+    	<xs:attribute name="useDefaultRouteForDnsRelay"
+    		type="xs:boolean">
+    	</xs:attribute>
+    	<xs:attribute name="gatewayBackingConfig">
+    		<xs:simpleType>
+    			<xs:restriction base="xs:string">
+    				<xs:enumeration value="COMPACT"></xs:enumeration>
+    				<xs:enumeration value="FULL"></xs:enumeration>
+    				<xs:enumeration value="FULL4"></xs:enumeration>
+    			</xs:restriction>
+    		</xs:simpleType>
+    	</xs:attribute>
+    </xs:complexType>
+
+    
+    <xs:complexType name="GatewayInterfaceType">
+        <xs:all>
+    		<xs:element name="interfaceType" minOccurs="1" maxOccurs="1">
+    			<xs:simpleType>
+    				<xs:restriction base="xs:string">
+    					<xs:enumeration value="UPLINK"></xs:enumeration>
+    					<xs:enumeration value="INTERNAL"></xs:enumeration>
+    				</xs:restriction>
+    			</xs:simpleType>
+    		</xs:element>
+    		<xs:element name="subnetParticipation" type="SubnetParticipationType" minOccurs="1" maxOccurs="1"></xs:element>
+    	</xs:all>
+    	<xs:attribute name="displayName" type="xs:string"></xs:attribute>
+    	<xs:attribute name="useForDefaultRoute" type="xs:boolean"></xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="SubnetParticipationType">
+    	<xs:sequence>
+    		<xs:element name="ipRange" type="IpRangesType" minOccurs="1" maxOccurs="unbounded"></xs:element>
+    	</xs:sequence>
+    	<xs:attribute name="gateway" type="xs:string"></xs:attribute>
+    	<xs:attribute name="netmask" type="xs:string"></xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="IpRangesType">
+    	<xs:attribute name="startAddress" type="xs:string"></xs:attribute>
+    	<xs:attribute name="endAddress" type="xs:string"></xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="GatewayFeaturesType">
+    	<xs:sequence>
+    		<xs:element name="firewallService" type="FirewallServiceType"></xs:element>
+    	</xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="FirewallServiceType">
+        <xs:sequence>
+    		<xs:element name="firewallRule" type="FirewallRulesType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+    	</xs:sequence>
+    	<xs:attribute name="enabled" type="xs:string"></xs:attribute>
+    	<xs:attribute name="logDefaultAction" type="xs:string"></xs:attribute>
+    	<xs:attribute name="defaultAction">
+    		<xs:simpleType>
+    			<xs:restriction base="xs:string">
+    				<xs:enumeration value="DROP"></xs:enumeration>
+    				<xs:enumeration value="ALLOW"></xs:enumeration>
+    			</xs:restriction>
+    		</xs:simpleType>
+    	</xs:attribute>
+    </xs:complexType>
+    
+    <xs:complexType name="FirewallRulesType">
+    	<xs:attribute name="description" type="xs:string"></xs:attribute>
+    	<xs:attribute name="protocol">
+    		<xs:simpleType>
+    			<xs:restriction base="xs:string">
+    				<xs:enumeration value="TCP"></xs:enumeration>
+    				<xs:enumeration value="UDP"></xs:enumeration>
+    				<xs:enumeration value="ICMP"></xs:enumeration>
+    				<xs:enumeration value="ANY"></xs:enumeration>
+    			</xs:restriction>
+    		</xs:simpleType>
+    	</xs:attribute>
+    	<xs:attribute name="sourceIp" type="xs:string"></xs:attribute>
+    	<xs:attribute name="destIp" type="xs:string"></xs:attribute>
+    	<xs:attribute name="destPort" type="xs:int"></xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="OrgVdcNetworkType">
+    	<xs:sequence>
+    		<xs:element name="configuration" type="ConfigurationType" minOccurs="1" maxOccurs="1"></xs:element>
+    	</xs:sequence>
+    	<xs:attribute name="name" type="xs:string"></xs:attribute>
+    	<xs:attribute name="description" type="xs:string"></xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="ConfigurationType">
+    	<xs:sequence>
+    		<xs:element name="ipScope" type="xs:string" minOccurs="1" maxOccurs="unbounded"></xs:element>
+    	</xs:sequence>
+    	<xs:attribute name="retainNetInfoAcrossDeployments"
+    		type="xs:boolean">
+    	</xs:attribute>
+    	<xs:attribute name="fenceMode">
+    		<xs:simpleType>
+    			<xs:restriction base="xs:string">
+    				<xs:enumeration value="NATROUTED"></xs:enumeration>
+    				<xs:enumeration value="BRIDGED"></xs:enumeration>
+    			</xs:restriction>
+    		</xs:simpleType>
+    	</xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="VAppType">
+    	<xs:sequence>
+    		<xs:element name="vms" type="VmsType" minOccurs="1" maxOccurs="1"></xs:element>
+    	</xs:sequence>
+    	<xs:attribute name="name" type="xs:string"></xs:attribute>
+    	<xs:attribute name="description" type="xs:string"></xs:attribute>
+    </xs:complexType>
+
+</xs:schema>

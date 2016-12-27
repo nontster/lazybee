@@ -6,7 +6,7 @@
 //
 
 
-package th.co.ais.enterprisecloud.model;
+package th.co.ais.enterprisecloud.domain;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlElementDecl;

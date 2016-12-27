@@ -6,4 +6,4 @@
 //
 
 @javax.xml.bind.annotation.XmlSchema(namespace = "http://enterprisecloud.ais.co.th/bot", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
-package th.co.ais.enterprisecloud.model;
+package th.co.ais.enterprisecloud.domain;

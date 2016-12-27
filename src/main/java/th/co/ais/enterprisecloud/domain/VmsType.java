@@ -6,7 +6,7 @@
 //
 
 
-package th.co.ais.enterprisecloud.model;
+package th.co.ais.enterprisecloud.domain;
 
 import java.util.ArrayList;
 import java.util.List;

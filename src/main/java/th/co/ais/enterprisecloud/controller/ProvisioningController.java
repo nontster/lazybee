@@ -1,7 +1,8 @@
 package th.co.ais.enterprisecloud.controller;
 
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeoutException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,10 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import th.co.ais.enterprisecloud.exception.InvalidParameterException;
-import th.co.ais.enterprisecloud.exception.MissingParameterException;
-import th.co.ais.enterprisecloud.exception.UserRoleNotFoundException;
-import th.co.ais.enterprisecloud.model.request.OrganizationType;
+import com.vmware.vcloud.sdk.VCloudException;
+
 import th.co.ais.enterprisecloud.service.CloudService;
 import th.co.ais.enterprisecloud.utils.ParamsValidator;
 
@@ -34,18 +33,27 @@ public class ProvisioningController {
 		this.validator = validator;
 	}
 
-	@RequestMapping(value="/provisioning", method=RequestMethod.POST)
+	@RequestMapping(value="/orgs", method=RequestMethod.POST)
 	@ResponseBody
-	public HttpEntity<OrganizationType> provisioning(@RequestBody OrganizationType org) throws InterruptedException,
-			UserRoleNotFoundException, MissingParameterException, InvalidParameterException {
-	
-		logger.debug("calling service.provisioning()");
-		validator.validate(org);
-		service.provisioning(org);	
-				
-		//org.add(linkTo(methodOn(ProvisioningController.class).provisioning(param)).withSelfRel());
-
+	public HttpEntity<th.co.ais.enterprisecloud.domain.response.OrganizationType> provisioning(
+			@RequestBody th.co.ais.enterprisecloud.domain.request.OrganizationType req)
+			throws VCloudException, TimeoutException, InterruptedException, ExecutionException {
 		
-		return new ResponseEntity<OrganizationType>(org, HttpStatus.OK); 
+		logger.debug("calling service.provisioning()");
+				
+		validator.validate(req);
+			
+		th.co.ais.enterprisecloud.domain.OrganizationType org = service.transfer(req);
+		Future<th.co.ais.enterprisecloud.domain.response.OrganizationType> res = service.provisioning(org);	
+					
+		// Wait until they are all done
+	    while (!res.isDone()) {
+	    	Thread.sleep(10); //10-millisecond pause between each check
+	    }
+	        				
+		//org.add(linkTo(methodOn(ProvisioningController.class).provisioning(param)).withSelfRel());
+		
+		return new ResponseEntity<th.co.ais.enterprisecloud.domain.response.OrganizationType>(res.get(), HttpStatus.OK); 
 	}
+		
 }

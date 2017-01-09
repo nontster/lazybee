@@ -1,15 +1,8 @@
 package th.co.ais.enterprisecloud.exception;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
+public class InsufficientIPAddressesException extends RuntimeException {
 
-@ResponseStatus(value=HttpStatus.BAD_REQUEST, reason="Insufficient IP addresses")  // 404
-public class InsufficientIPAddressesException extends Exception {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -2759991456827582740L;
+	private static final long serialVersionUID = -2890222279507225994L;
 
 	public InsufficientIPAddressesException(String message) {
 		super(message);

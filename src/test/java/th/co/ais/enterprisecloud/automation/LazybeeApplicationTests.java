@@ -7,6 +7,9 @@ import org.junit.runner.RunWith;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
+import java.util.concurrent.TimeoutException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,8 +25,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.vmware.vcloud.sdk.VCloudException;
 
-import th.co.ais.enterprisecloud.model.request.OrganizationType;
-import th.co.ais.enterprisecloud.service.CloudConfiguration;
+import th.co.ais.enterprisecloud.domain.OrganizationType;
+import th.co.ais.enterprisecloud.exception.ExternalNetworkNotFoundException;
+import th.co.ais.enterprisecloud.exception.InsufficientIPAddressesException;
+import th.co.ais.enterprisecloud.exception.MissingInputParameterException;
+import th.co.ais.enterprisecloud.exception.MissingVmTemplateException;
+import th.co.ais.enterprisecloud.exception.UserRoleNotFoundException;
+import th.co.ais.enterprisecloud.exception.VdcNetworkNotAvailableException;
 import th.co.ais.enterprisecloud.service.CloudService;
 import th.co.ais.enterprisecloud.service.VCloudDirectorService;
 
@@ -40,15 +48,18 @@ public class LazybeeApplicationTests {
 	@MockBean
 	private CloudService service;
 	
-	@MockBean
-	private CloudConfiguration conf;
-	
+
 	@Before
-    public void setup() throws InterruptedException {
-		OrganizationType org = new OrganizationType();
+	public void setup() throws InterruptedException, VCloudException, MissingInputParameterException, TimeoutException,
+			UserRoleNotFoundException, MissingVmTemplateException, VdcNetworkNotAvailableException,
+			ExternalNetworkNotFoundException, InsufficientIPAddressesException {
+		
+		OrganizationType in = new OrganizationType();
+		
+		th.co.ais.enterprisecloud.domain.response.OrganizationType res = new th.co.ais.enterprisecloud.domain.response.OrganizationType();
 		
 		service = mock(VCloudDirectorService.class);
-		when(this.service.provisioning(org)).thenReturn(new AsyncResult<>(Boolean.TRUE));
+		when(this.service.provisioning(in)).thenReturn(new AsyncResult<>(res));
 	}
 	
 	@Test
@@ -61,7 +72,7 @@ public class LazybeeApplicationTests {
 		headers.add("Accept-Charset", "UTF-8");
 		
 		HttpEntity<String> request = new HttpEntity<>(body, headers);
-		ResponseEntity<String> response = this.restTemplate.postForEntity("http://localhost:" + port + "/provisioning", request, String.class);
+		ResponseEntity<String> response = this.restTemplate.postForEntity("http://localhost:" + port + "/orgs", request, String.class);
 		
 		assertTrue(Boolean.TRUE);
 	}

@@ -2,15 +2,15 @@ package th.co.ais.enterprisecloud.domain;
 
 import java.math.BigInteger;
 
-public class VMemory {
+public class VMemoryType {
 	private BigInteger memorySize;
 
-	public VMemory() {
+	public VMemoryType() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public VMemory(BigInteger memorySize) {
+	public VMemoryType(BigInteger memorySize) {
 		super();
 		this.memorySize = memorySize;
 	}

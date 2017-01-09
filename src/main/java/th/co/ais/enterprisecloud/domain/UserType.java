@@ -1,6 +1,6 @@
 package th.co.ais.enterprisecloud.domain;
 
-public class User {
+public class UserType {
 	private String name;
 	private String password;
 	private Boolean enabled;
@@ -9,12 +9,12 @@ public class User {
 	private String emailAddress;
 	private String phone;
 	
-	public User() {
+	public UserType() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public User(String name, String password, Boolean enabled, String roleName, String fullName, String emailAddress,
+	public UserType(String name, String password, Boolean enabled, String roleName, String fullName, String emailAddress,
 			String phone) {
 		super();
 		this.name = name;

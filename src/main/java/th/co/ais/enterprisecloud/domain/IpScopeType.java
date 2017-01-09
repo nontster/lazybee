@@ -1,21 +1,21 @@
 package th.co.ais.enterprisecloud.domain;
 
-public class IpScope {
+public class IpScopeType {
 	private String netmask;
 	private String gateway;
 	private Boolean enabled;
 	private Boolean inherited;	
 	private String dns1;
 	private String dns2;
-	private IpRange ipRange;
+	private IpRangeType ipRange;
 	
-	public IpScope() {
+	public IpScopeType() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public IpScope(String netmask, String gateway, Boolean enabled, Boolean inherited, String dns1, String dns2,
-			IpRange ipRange) {
+	public IpScopeType(String netmask, String gateway, Boolean enabled, Boolean inherited, String dns1, String dns2,
+			IpRangeType ipRange) {
 		super();
 		this.netmask = netmask;
 		this.gateway = gateway;
@@ -74,11 +74,11 @@ public class IpScope {
 		this.dns2 = dns2;
 	}
 
-	public IpRange getIpRange() {
+	public IpRangeType getIpRange() {
 		return ipRange;
 	}
 
-	public void setIpRange(IpRange ipRange) {
+	public void setIpRange(IpRangeType ipRange) {
 		this.ipRange = ipRange;
 	}
 	

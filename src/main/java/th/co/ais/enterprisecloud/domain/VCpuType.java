@@ -1,15 +1,15 @@
 package th.co.ais.enterprisecloud.domain;
 
-public class VCpu {
+public class VCpuType {
     private Integer noOfCpus; 
     private Integer coresPerSocket;
     
-	public VCpu() {
+	public VCpuType() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public VCpu(Integer noOfCpus, Integer coresPerSocket) {
+	public VCpuType(Integer noOfCpus, Integer coresPerSocket) {
 		super();
 		this.noOfCpus = noOfCpus;
 		this.coresPerSocket = coresPerSocket;

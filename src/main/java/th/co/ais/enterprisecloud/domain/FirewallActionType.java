@@ -1,5 +1,5 @@
 package th.co.ais.enterprisecloud.domain;
 
-public enum FirewallAction {
+public enum FirewallActionType {
 	DROP, ALLOW
 }

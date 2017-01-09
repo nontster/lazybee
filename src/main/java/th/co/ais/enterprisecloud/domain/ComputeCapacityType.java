@@ -1,33 +1,33 @@
 package th.co.ais.enterprisecloud.domain;
 
-public class ComputeCapacity {
-	private Cpu cpu;
-	private Memory memory;
+public class ComputeCapacityType {
+	private CpuType cpu;
+	private MemoryType memory;
 	
-	public ComputeCapacity() {
+	public ComputeCapacityType() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public ComputeCapacity(Cpu cpu, Memory memory) {
+	public ComputeCapacityType(CpuType cpu, MemoryType memory) {
 		super();
 		this.cpu = cpu;
 		this.memory = memory;
 	}
 
-	public Cpu getCpu() {
+	public CpuType getCpu() {
 		return cpu;
 	}
 
-	public void setCpu(Cpu cpu) {
+	public void setCpu(CpuType cpu) {
 		this.cpu = cpu;
 	}
 
-	public Memory getMemory() {
+	public MemoryType getMemory() {
 		return memory;
 	}
 
-	public void setMemory(Memory memory) {
+	public void setMemory(MemoryType memory) {
 		this.memory = memory;
 	}
 	

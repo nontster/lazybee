@@ -1,14 +1,14 @@
 package th.co.ais.enterprisecloud.domain;
 
-public class ProviderVdc {
+public class ProviderVdcType {
 	private String name;
 
-	public ProviderVdc() {
+	public ProviderVdcType() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public ProviderVdc(String name) {
+	public ProviderVdcType(String name) {
 		super();
 		this.name = name;
 	}

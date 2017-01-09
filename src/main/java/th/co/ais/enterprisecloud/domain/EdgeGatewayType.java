@@ -1,18 +1,18 @@
 package th.co.ais.enterprisecloud.domain;
 
-public class EdgeGateway {
+public class EdgeGatewayType {
 	private String name;
 	private String description;
-	private GatewayConfiguration gatewayConfiguration;
-	private GatewayFeatures gatewayFeatures;
+	private GatewayConfigurationType gatewayConfiguration;
+	private GatewayFeaturesType gatewayFeatures;
 	
-	public EdgeGateway() {
+	public EdgeGatewayType() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public EdgeGateway(String name, String description, GatewayConfiguration gatewayConfiguration,
-			GatewayFeatures gatewayFeatures) {
+	public EdgeGatewayType(String name, String description, GatewayConfigurationType gatewayConfiguration,
+			GatewayFeaturesType gatewayFeatures) {
 		super();
 		this.name = name;
 		this.description = description;
@@ -36,19 +36,19 @@ public class EdgeGateway {
 		this.description = description;
 	}
 
-	public GatewayConfiguration getGatewayConfiguration() {
+	public GatewayConfigurationType getGatewayConfiguration() {
 		return gatewayConfiguration;
 	}
 
-	public void setGatewayConfiguration(GatewayConfiguration gatewayConfiguration) {
+	public void setGatewayConfiguration(GatewayConfigurationType gatewayConfiguration) {
 		this.gatewayConfiguration = gatewayConfiguration;
 	}
 
-	public GatewayFeatures getGatewayFeatures() {
+	public GatewayFeaturesType getGatewayFeatures() {
 		return gatewayFeatures;
 	}
 
-	public void setGatewayFeatures(GatewayFeatures gatewayFeatures) {
+	public void setGatewayFeatures(GatewayFeaturesType gatewayFeatures) {
 		this.gatewayFeatures = gatewayFeatures;
 	}
 		

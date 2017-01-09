@@ -1,46 +1,36 @@
 package th.co.ais.enterprisecloud.domain;
 
-import java.util.Date;
-
-public class VCloudOrganization {
-	private String template_version;
+public class OrganizationType {
 	private String name;
 	private String description;
-	private String fullName;
 	private String shortName;
 	private String url;
 	private Boolean enabled;
 	private OrderType orderType;
 	private String caNumber;
-
-	private Date startDate;
-	private Date endDate;
-	private User user;
-	private OrgSettings orgSettings;
-	private CloudResources cloudResources;
-	private Vdc vdc;
-	private EdgeGateway edgeGateway;
-	private OrgVdcNetwork orgVdcNetwork;
-	private VApp vApp;
+	private String orderId;
+	private UserType user;
+	private OrgSettingsType orgSettings;
+	private CloudResourcesType cloudResources;
+	private VdcType vdc;
+	private EdgeGatewayType edgeGateway;
+	private OrgVdcNetworkType orgVdcNetwork;
+	private VAppType vApp;
 	
-	public VCloudOrganization() {
+	public OrganizationType() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public VCloudOrganization(String template_version, String name, String description, String fullName, Boolean enabled, OrderType orderType,
-			String caNumber, Date startDate, Date endDate, User user, OrgSettings orgSettings,
-			CloudResources cloudResources, Vdc vdc, EdgeGateway edgeGateway, OrgVdcNetwork orgVdcNetwork, VApp vApp) {
+	public OrganizationType(String name, String description, Boolean enabled, OrderType orderType,
+			String caNumber, String orderId, UserType user, OrgSettingsType orgSettings,
+			CloudResourcesType cloudResources, VdcType vdc, EdgeGatewayType edgeGateway, OrgVdcNetworkType orgVdcNetwork, VAppType vApp) {
 		super();
-		this.setTemplate_version(template_version);
 		this.name = name;
 		this.description = description;
-		this.fullName = fullName;
 		this.enabled = enabled;
-		this.setOrderType(orderType);
-		this.setCaNumber(caNumber);
-		this.setStartDate(startDate);
-		this.setEndDate(endDate);
+		this.orderType = orderType;
+		this.caNumber = caNumber;
 		this.user = user;
 		this.orgSettings = orgSettings;
 		this.cloudResources = cloudResources;
@@ -48,14 +38,6 @@ public class VCloudOrganization {
 		this.edgeGateway = edgeGateway;
 		this.orgVdcNetwork = orgVdcNetwork;
 		this.vApp = vApp;
-	}
-
-	public String getTemplate_version() {
-		return template_version;
-	}
-
-	public void setTemplate_version(String template_version) {
-		this.template_version = template_version;
 	}
 
 	public String getName() {
@@ -86,14 +68,6 @@ public class VCloudOrganization {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public String getFullName() {
-		return fullName;
-	}
-
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
 	}
 
 	/**
@@ -136,81 +110,73 @@ public class VCloudOrganization {
 		this.caNumber = caNumber;
 	}
 
-	public Date getStartDate() {
-		return startDate;
+	public String getOrderId() {
+		return orderId;
 	}
 
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
-	}
-
-	public Date getEndDate() {
-		return endDate;
-	}
-
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
 	}
 
 	public void setEnabled(Boolean enabled) {
 		this.enabled = enabled;
 	}
 
-	public User getUser() {
+	public UserType getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(UserType user) {
 		this.user = user;
 	}
 
-	public OrgSettings getOrgSettings() {
+	public OrgSettingsType getOrgSettings() {
 		return orgSettings;
 	}
 
-	public void setOrgSettings(OrgSettings orgSettings) {
+	public void setOrgSettings(OrgSettingsType orgSettings) {
 		this.orgSettings = orgSettings;
 	}
 
-	public CloudResources getCloudResources() {
+	public CloudResourcesType getCloudResources() {
 		return cloudResources;
 	}
 
-	public void setCloudResources(CloudResources cloudResources) {
+	public void setCloudResources(CloudResourcesType cloudResources) {
 		this.cloudResources = cloudResources;
 	}
 
-	public Vdc getVdc() {
+	public VdcType getVdc() {
 		return vdc;
 	}
 
-	public void setVdc(Vdc vdc) {
+	public void setVdc(VdcType vdc) {
 		this.vdc = vdc;
 	}
 
 
-	public EdgeGateway getEdgeGateway() {
+	public EdgeGatewayType getEdgeGateway() {
 		return edgeGateway;
 	}
 
 
-	public void setEdgeGateway(EdgeGateway edgeGateway) {
+	public void setEdgeGateway(EdgeGatewayType edgeGateway) {
 		this.edgeGateway = edgeGateway;
 	}
 
-	public OrgVdcNetwork getOrgVdcNetwork() {
+	public OrgVdcNetworkType getOrgVdcNetwork() {
 		return orgVdcNetwork;
 	}
 
-	public void setOrgVdcNetwork(OrgVdcNetwork orgVdcNetwork) {
+	public void setOrgVdcNetwork(OrgVdcNetworkType orgVdcNetwork) {
 		this.orgVdcNetwork = orgVdcNetwork;
 	}
 
-	public VApp getvApp() {
+	public VAppType getvApp() {
 		return vApp;
 	}
 
-	public void setvApp(VApp vApp) {
+	public void setvApp(VAppType vApp) {
 		this.vApp = vApp;
 	}
 	

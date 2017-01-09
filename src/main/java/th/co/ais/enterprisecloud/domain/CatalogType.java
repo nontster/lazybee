@@ -1,14 +1,14 @@
 package th.co.ais.enterprisecloud.domain;
 
-public class Catalog {
+public class CatalogType {
 	private String name;
 
-	public Catalog() {
+	public CatalogType() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Catalog(String name) {
+	public CatalogType(String name) {
 		super();
 		this.name = name;
 	}

@@ -2,19 +2,19 @@ package th.co.ais.enterprisecloud.domain;
 
 import java.util.List;
 
-public class FirewallService {
+public class FirewallServiceType {
 	private Boolean enabled;
-	private FirewallAction defaultAction;
+	private FirewallActionType defaultAction;
 	private Boolean logDefaultAction;	
-	private List <FirewallRule> firewallRules;
+	private List <FirewallRuleType> firewallRules;
 	
-	public FirewallService() {
+	public FirewallServiceType() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public FirewallService(Boolean enabled, FirewallAction defaultAction, Boolean logDefaultAction,
-			List<FirewallRule> firewallRules) {
+	public FirewallServiceType(Boolean enabled, FirewallActionType defaultAction, Boolean logDefaultAction,
+			List<FirewallRuleType> firewallRules) {
 		super();
 		this.enabled = enabled;
 		this.defaultAction = defaultAction;
@@ -30,11 +30,11 @@ public class FirewallService {
 		this.enabled = enabled;
 	}
 
-	public FirewallAction getDefaultAction() {
+	public FirewallActionType getDefaultAction() {
 		return defaultAction;
 	}
 
-	public void setDefaultAction(FirewallAction defaultAction) {
+	public void setDefaultAction(FirewallActionType defaultAction) {
 		this.defaultAction = defaultAction;
 	}
 
@@ -46,11 +46,11 @@ public class FirewallService {
 		this.logDefaultAction = logDefaultAction;
 	}
 
-	public List<FirewallRule> getFirewallRules() {
+	public List<FirewallRuleType> getFirewallRules() {
 		return firewallRules;
 	}
 
-	public void setFirewallRules(List<FirewallRule> firewallRules) {
+	public void setFirewallRules(List<FirewallRuleType> firewallRules) {
 		this.firewallRules = firewallRules;
 	}
 	

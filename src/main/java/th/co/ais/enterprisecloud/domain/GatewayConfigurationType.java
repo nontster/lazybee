@@ -2,20 +2,20 @@ package th.co.ais.enterprisecloud.domain;
 
 import java.util.List;
 
-public class GatewayConfiguration {
+public class GatewayConfigurationType {
 	
-	private GatewayBackingConfigEnums gatewayBackingConfig;
+	private GatewayBackingConfigType gatewayBackingConfig;
 	private Boolean haEnabled;
 	private Boolean useDefaultRouteForDnsRelay;
-	private List<GatewayInterface> gatewayInterfaces;
+	private List<GatewayInterfaceType> gatewayInterfaces;
 	
-	public GatewayConfiguration() {
+	public GatewayConfigurationType() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public GatewayConfiguration(GatewayBackingConfigEnums gatewayBackingConfig, Boolean haEnabled,
-			Boolean useDefaultRouteForDnsRelay, List<GatewayInterface> gatewayInterfaces) {
+	public GatewayConfigurationType(GatewayBackingConfigType gatewayBackingConfig, Boolean haEnabled,
+			Boolean useDefaultRouteForDnsRelay, List<GatewayInterfaceType> gatewayInterfaces) {
 		super();
 		this.gatewayBackingConfig = gatewayBackingConfig;
 		this.haEnabled = haEnabled;
@@ -23,11 +23,11 @@ public class GatewayConfiguration {
 		this.gatewayInterfaces = gatewayInterfaces;
 	}
 
-	public GatewayBackingConfigEnums getGatewayBackingConfig() {
+	public GatewayBackingConfigType getGatewayBackingConfig() {
 		return gatewayBackingConfig;
 	}
 
-	public void setGatewayBackingConfig(GatewayBackingConfigEnums gatewayBackingConfig) {
+	public void setGatewayBackingConfig(GatewayBackingConfigType gatewayBackingConfig) {
 		this.gatewayBackingConfig = gatewayBackingConfig;
 	}
 
@@ -48,11 +48,11 @@ public class GatewayConfiguration {
 		this.useDefaultRouteForDnsRelay = useDefaultRouteForDnsRelay;
 	}
 
-	public List<GatewayInterface> getGatewayInterfaces() {
+	public List<GatewayInterfaceType> getGatewayInterfaces() {
 		return gatewayInterfaces;
 	}
 
-	public void setGatewayInterfaces(List<GatewayInterface> gatewayInterfaces) {
+	public void setGatewayInterfaces(List<GatewayInterfaceType> gatewayInterfaces) {
 		this.gatewayInterfaces = gatewayInterfaces;
 	}
 

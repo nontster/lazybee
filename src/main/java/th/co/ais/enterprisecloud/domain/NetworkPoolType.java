@@ -1,14 +1,14 @@
 package th.co.ais.enterprisecloud.domain;
 
-public class NetworkPool {
+public class NetworkPoolType {
 	private String name;
 
-	public NetworkPool() {
+	public NetworkPoolType() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public NetworkPool(String name) {
+	public NetworkPoolType(String name) {
 		super();
 		this.name = name;
 	}

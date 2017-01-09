@@ -1,17 +1,17 @@
 package th.co.ais.enterprisecloud.domain;
 
-public class CloudResources {
-	private ProviderVdc providerVdc;
-	private NetworkPool networkPool;
-	private ExternalNetwork externalNetwork;
-	private Catalog catalog;
+public class CloudResourcesType {
+	private ProviderVdcType providerVdc;
+	private NetworkPoolType networkPool;
+	private ExternalNetworkType externalNetwork;
+	private CatalogType catalog;
 	
-	public CloudResources() {
+	public CloudResourcesType() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public CloudResources(ProviderVdc providerVdc, NetworkPool networkPool, ExternalNetwork externalNetwork, Catalog catalog) {
+	public CloudResourcesType(ProviderVdcType providerVdc, NetworkPoolType networkPool, ExternalNetworkType externalNetwork, CatalogType catalog) {
 		super();
 		this.providerVdc = providerVdc;
 		this.networkPool = networkPool;
@@ -19,35 +19,35 @@ public class CloudResources {
 		this.setCatalog(catalog);
 	}
 
-	public ProviderVdc getProviderVdc() {
+	public ProviderVdcType getProviderVdc() {
 		return providerVdc;
 	}
 
-	public void setProviderVdc(ProviderVdc providerVdc) {
+	public void setProviderVdc(ProviderVdcType providerVdc) {
 		this.providerVdc = providerVdc;
 	}
 
-	public NetworkPool getNetworkPool() {
+	public NetworkPoolType getNetworkPool() {
 		return networkPool;
 	}
 
-	public void setNetworkPool(NetworkPool networkPool) {
+	public void setNetworkPool(NetworkPoolType networkPool) {
 		this.networkPool = networkPool;
 	}
 
-	public ExternalNetwork getExternalNetwork() {
+	public ExternalNetworkType getExternalNetwork() {
 		return externalNetwork;
 	}
 
-	public void setExternalNetwork(ExternalNetwork externalNetwork) {
+	public void setExternalNetwork(ExternalNetworkType externalNetwork) {
 		this.externalNetwork = externalNetwork;
 	}
 
-	public Catalog getCatalog() {
+	public CatalogType getCatalog() {
 		return catalog;
 	}
 
-	public void setCatalog(Catalog catalog) {
+	public void setCatalog(CatalogType catalog) {
 		this.catalog = catalog;
 	}
 }

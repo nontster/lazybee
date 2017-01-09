@@ -1,17 +1,17 @@
 package th.co.ais.enterprisecloud.domain;
 
-public class VdcStorageProfile {
+public class VdcStorageProfileType {
     private Boolean enabled;
     private Boolean def;
     private Integer limit;
     private String units;
     
-	public VdcStorageProfile() {
+	public VdcStorageProfileType() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public VdcStorageProfile(Boolean enabled, Boolean def, Integer limit, String units) {
+	public VdcStorageProfileType(Boolean enabled, Boolean def, Integer limit, String units) {
 		super();
 		this.enabled = enabled;
 		this.def = def;

@@ -1,23 +1,23 @@
 package th.co.ais.enterprisecloud.domain;
 
-public class GatewayFeatures {
-	private FirewallService firewallService;
+public class GatewayFeaturesType {
+	private FirewallServiceType firewallService;
 
-	public GatewayFeatures() {
+	public GatewayFeaturesType() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public GatewayFeatures(FirewallService firewallService) {
+	public GatewayFeaturesType(FirewallServiceType firewallService) {
 		super();
 		this.setFirewallService(firewallService);
 	}
 
-	public FirewallService getFirewallService() {
+	public FirewallServiceType getFirewallService() {
 		return firewallService;
 	}
 
-	public void setFirewallService(FirewallService firewallService) {
+	public void setFirewallService(FirewallServiceType firewallService) {
 		this.firewallService = firewallService;
 	}
 	

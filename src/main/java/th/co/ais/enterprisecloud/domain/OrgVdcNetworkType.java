@@ -1,16 +1,16 @@
 package th.co.ais.enterprisecloud.domain;
 
-public class OrgVdcNetwork {
+public class OrgVdcNetworkType {
 	private String name;
 	private String description;
-	private Configuration configuration;
+	private ConfigurationType configuration;
 	
-	public OrgVdcNetwork() {
+	public OrgVdcNetworkType() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public OrgVdcNetwork(String name, String description, Configuration configuration) {
+	public OrgVdcNetworkType(String name, String description, ConfigurationType configuration) {
 		super();
 		this.name = name;
 		this.description = description;
@@ -33,11 +33,11 @@ public class OrgVdcNetwork {
 		this.description = description;
 	}
 
-	public Configuration getConfiguration() {
+	public ConfigurationType getConfiguration() {
 		return configuration;
 	}
 
-	public void setConfiguration(Configuration configuration) {
+	public void setConfiguration(ConfigurationType configuration) {
 		this.configuration = configuration;
 	}
 	

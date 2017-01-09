@@ -1,16 +1,16 @@
 package th.co.ais.enterprisecloud.domain;
 
-public class OrgLeaseSettings {
+public class OrgLeaseSettingsType {
 	private Boolean deleteOnStorageLeaseExpiration;
 	private Integer deploymentLeaseSeconds;
 	private Integer storageLeaseSeconds;
 	
-	public OrgLeaseSettings() {
+	public OrgLeaseSettingsType() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public OrgLeaseSettings(Boolean deleteOnStorageLeaseExpiration, Integer deploymentLeaseSeconds,
+	public OrgLeaseSettingsType(Boolean deleteOnStorageLeaseExpiration, Integer deploymentLeaseSeconds,
 			Integer storageLeaseSeconds) {
 		super();
 		this.deleteOnStorageLeaseExpiration = deleteOnStorageLeaseExpiration;

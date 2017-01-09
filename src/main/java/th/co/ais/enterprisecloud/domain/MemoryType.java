@@ -1,18 +1,18 @@
 package th.co.ais.enterprisecloud.domain;
 
-public class Memory {
+public class MemoryType {
     private Integer allocated;
     private Integer overhead;
     private String units;
     private Integer used;
     private Integer limit;
     
-	public Memory() {
+	public MemoryType() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Memory(Integer allocated, Integer overhead, String units, Integer used, Integer limit) {
+	public MemoryType(Integer allocated, Integer overhead, String units, Integer used, Integer limit) {
 		super();
 		this.allocated = allocated;
 		this.overhead = overhead;

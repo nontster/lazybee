@@ -1,14 +1,14 @@
 package th.co.ais.enterprisecloud.domain;
 
-public class ExternalNetwork {
+public class ExternalNetworkType {
 	private String name;
 
-	public ExternalNetwork() {
+	public ExternalNetworkType() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public ExternalNetwork(String name) {
+	public ExternalNetworkType(String name) {
 		super();
 		this.name = name;
 	}

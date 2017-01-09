@@ -1,18 +1,18 @@
 package th.co.ais.enterprisecloud.domain;
 
-public class FirewallRule {
+public class FirewallRuleType {
     private String description;
-    private Protocol protocol; 
+    private ProtocolType protocol; 
     private String sourceIp;
     private String destIp;
     private String destPort;
     
-	public FirewallRule() {
+	public FirewallRuleType() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public FirewallRule(String description, Protocol protocol, String sourceIp, String destIp, String destPort) {
+	public FirewallRuleType(String description, ProtocolType protocol, String sourceIp, String destIp, String destPort) {
 		super();
 		this.description = description;
 		this.protocol = protocol;
@@ -29,11 +29,11 @@ public class FirewallRule {
 		this.description = description;
 	}
 
-	public Protocol getProtocol() {
+	public ProtocolType getProtocol() {
 		return protocol;
 	}
 
-	public void setProtocol(Protocol protocol) {
+	public void setProtocol(ProtocolType protocol) {
 		this.protocol = protocol;
 	}
 

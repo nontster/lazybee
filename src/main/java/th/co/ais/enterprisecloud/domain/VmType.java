@@ -1,31 +1,37 @@
 package th.co.ais.enterprisecloud.domain;
 
-public class ChildVm {
+import java.util.Date;
+
+public class VmType {
 	private String id;
 	private String nonMobileNo;
     private String name;
     private String description;
     private String templateType;
     private String computerName;
-    private VCpu vCpu;
-    private VMemory vMemory;
+    private VCpuType vCpu;
+    private VMemoryType vMemory;
     private Integer storageSize;
     private String userName;
     private String password;
+	private Date startDate;
+	private Date endDate;
     
-	public ChildVm() {
+	public VmType() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public ChildVm(String name, String description, String templateType, String computerName, VCpu vCpu, VMemory vMemory) {
+	public VmType(String name, String description, String templateType, String computerName, VCpuType vCpu, VMemoryType vMemory, Date startDate, Date endDate) {
 		super();
 		this.name = name;
 		this.description = description;
 		this.templateType = templateType;
-		this.setComputerName(computerName);
-		this.setvCpu(vCpu);
-		this.setvMemory(vMemory);
+		this.computerName = computerName;
+		this.vCpu = vCpu;
+		this.vMemory = vMemory;
+		this.startDate = startDate;
+		this.endDate = endDate;
 	}
 	
 	/**
@@ -88,19 +94,19 @@ public class ChildVm {
 		this.computerName = computerName;
 	}
 
-	public VCpu getvCpu() {
+	public VCpuType getvCpu() {
 		return vCpu;
 	}
 
-	public void setvCpu(VCpu vCpu) {
+	public void setvCpu(VCpuType vCpu) {
 		this.vCpu = vCpu;
 	}
 
-	public VMemory getvMemory() {
+	public VMemoryType getvMemory() {
 		return vMemory;
 	}
 
-	public void setvMemory(VMemory vMemory) {
+	public void setvMemory(VMemoryType vMemory) {
 		this.vMemory = vMemory;
 	}
 
@@ -144,6 +150,34 @@ public class ChildVm {
 	 */
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	/**
+	 * @return the startDate
+	 */
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	/**
+	 * @param startDate the startDate to set
+	 */
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	/**
+	 * @return the endDate
+	 */
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	/**
+	 * @param endDate the endDate to set
+	 */
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
      
 }

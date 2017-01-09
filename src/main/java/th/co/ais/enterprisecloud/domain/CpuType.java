@@ -1,18 +1,18 @@
 package th.co.ais.enterprisecloud.domain;
 
-public class Cpu {
+public class CpuType {
 	private Integer allocated;
 	private Integer overhead;
 	private String units;
 	private Integer used;
 	private Integer limit;
 	
-	public Cpu() {
+	public CpuType() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Cpu(Integer allocated, Integer overhead, String units, Integer used, Integer limit) {
+	public CpuType(Integer allocated, Integer overhead, String units, Integer used, Integer limit) {
 		super();
 		this.allocated = allocated;
 		this.overhead = overhead;

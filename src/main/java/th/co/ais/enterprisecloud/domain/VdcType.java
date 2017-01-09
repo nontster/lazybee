@@ -1,24 +1,24 @@
 package th.co.ais.enterprisecloud.domain;
 
-public class Vdc {
+public class VdcType {
     private String name;
     private Boolean enabled;
     private Float resourceGuaranteedCpu;
     private Float resourceGuaranteedMemory;
     private Integer vmQuota;
     private String description;
-    private ComputeCapacity computeCapacity;
+    private ComputeCapacityType computeCapacity;
     private Integer networkQuota;
-    private VdcStorageProfile vdcStorageProfile;
+    private VdcStorageProfileType vdcStorageProfile;
     
-	public Vdc() {
+	public VdcType() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Vdc(ComputeCapacity computeCapacity, String description, Integer networkQuota, Integer vmQuota, Boolean enabled,
+	public VdcType(ComputeCapacityType computeCapacity, String description, Integer networkQuota, Integer vmQuota, Boolean enabled,
 			Float resourceGuaranteedCpu, String name, Float resourceGuaranteedMemory,
-			VdcStorageProfile vdcStorageProfile) {
+			VdcStorageProfileType vdcStorageProfile) {
 		super();
 		this.computeCapacity = computeCapacity;
 		this.description = description;
@@ -81,11 +81,11 @@ public class Vdc {
 		this.description = description;
 	}
 
-	public ComputeCapacity getComputeCapacity() {
+	public ComputeCapacityType getComputeCapacity() {
 		return computeCapacity;
 	}
 
-	public void setComputeCapacity(ComputeCapacity computeCapacity) {
+	public void setComputeCapacity(ComputeCapacityType computeCapacity) {
 		this.computeCapacity = computeCapacity;
 	}
 
@@ -97,11 +97,11 @@ public class Vdc {
 		this.networkQuota = networkQuota;
 	}
 
-	public VdcStorageProfile getVdcStorageProfile() {
+	public VdcStorageProfileType getVdcStorageProfile() {
 		return vdcStorageProfile;
 	}
 
-	public void setVdcStorageProfile(VdcStorageProfile vdcStorageProfile) {
+	public void setVdcStorageProfile(VdcStorageProfileType vdcStorageProfile) {
 		this.vdcStorageProfile = vdcStorageProfile;
 	}
 	

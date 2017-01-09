@@ -1,10 +1,10 @@
 package th.co.ais.enterprisecloud.domain;
 
-public class Credential {
+public class CredentialType {
 	private String user;
 	private String password;
 	
-	public Credential(String user, String password) {
+	public CredentialType(String user, String password) {
 		super();
 		this.setUser(user);
 		this.setPassword(password);

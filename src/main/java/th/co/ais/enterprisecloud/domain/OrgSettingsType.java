@@ -1,19 +1,19 @@
 package th.co.ais.enterprisecloud.domain;
 
-public class OrgSettings {
-	private OrgLeaseSettings orgLeaseSettings;
-	private OrgGeneralSettings orgGeneralSettings;
-	private OrgVAppTemplateLeaseSettings orgVAppTemplateLeaseSettings;
-	private OrgPasswordPolicySettings orgPasswordPolicySettings;
+public class OrgSettingsType {
+	private OrgLeaseSettingsType orgLeaseSettings;
+	private OrgGeneralSettingsType orgGeneralSettings;
+	private OrgVAppTemplateLeaseSettingsType orgVAppTemplateLeaseSettings;
+	private OrgPasswordPolicySettingsType orgPasswordPolicySettings;
 
-	public OrgSettings() {
+	public OrgSettingsType() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public OrgSettings(OrgLeaseSettings orgLeaseSettings, OrgGeneralSettings orgGeneralSettings,
-			OrgVAppTemplateLeaseSettings orgVAppTemplateLeaseSettings,
-			OrgPasswordPolicySettings orgPasswordPolicySettings) {
+	public OrgSettingsType(OrgLeaseSettingsType orgLeaseSettings, OrgGeneralSettingsType orgGeneralSettings,
+			OrgVAppTemplateLeaseSettingsType orgVAppTemplateLeaseSettings,
+			OrgPasswordPolicySettingsType orgPasswordPolicySettings) {
 
 		this.orgLeaseSettings = orgLeaseSettings;
 		this.orgGeneralSettings = orgGeneralSettings;
@@ -21,35 +21,35 @@ public class OrgSettings {
 		this.orgPasswordPolicySettings = orgPasswordPolicySettings;
 	}
 
-	public OrgLeaseSettings getOrgLeaseSettings() {
+	public OrgLeaseSettingsType getOrgLeaseSettings() {
 		return orgLeaseSettings;
 	}
 
-	public void setOrgLeaseSettings(OrgLeaseSettings orgLeaseSettings) {
+	public void setOrgLeaseSettings(OrgLeaseSettingsType orgLeaseSettings) {
 		this.orgLeaseSettings = orgLeaseSettings;
 	}
 
-	public OrgGeneralSettings getOrgGeneralSettings() {
+	public OrgGeneralSettingsType getOrgGeneralSettings() {
 		return orgGeneralSettings;
 	}
 
-	public void setOrgGeneralSettings(OrgGeneralSettings orgGeneralSettings) {
+	public void setOrgGeneralSettings(OrgGeneralSettingsType orgGeneralSettings) {
 		this.orgGeneralSettings = orgGeneralSettings;
 	}
 
-	public OrgVAppTemplateLeaseSettings getOrgVAppTemplateLeaseSettings() {
+	public OrgVAppTemplateLeaseSettingsType getOrgVAppTemplateLeaseSettings() {
 		return orgVAppTemplateLeaseSettings;
 	}
 
-	public void setOrgVAppTemplateLeaseSettings(OrgVAppTemplateLeaseSettings orgVAppTemplateLeaseSettings) {
+	public void setOrgVAppTemplateLeaseSettings(OrgVAppTemplateLeaseSettingsType orgVAppTemplateLeaseSettings) {
 		this.orgVAppTemplateLeaseSettings = orgVAppTemplateLeaseSettings;
 	}
 
-	public OrgPasswordPolicySettings getOrgPasswordPolicySettings() {
+	public OrgPasswordPolicySettingsType getOrgPasswordPolicySettings() {
 		return orgPasswordPolicySettings;
 	}
 
-	public void setOrgPasswordPolicySettings(OrgPasswordPolicySettings orgPasswordPolicySettings) {
+	public void setOrgPasswordPolicySettings(OrgPasswordPolicySettingsType orgPasswordPolicySettings) {
 		this.orgPasswordPolicySettings = orgPasswordPolicySettings;
 	}
 	

@@ -1,5 +1,5 @@
 package th.co.ais.enterprisecloud.domain;
 
-public enum FenceMode {
+public enum FenceModeType {
 	NATROUTED, BRIDGED
 }

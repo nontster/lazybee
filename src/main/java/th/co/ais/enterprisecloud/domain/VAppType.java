@@ -2,20 +2,21 @@ package th.co.ais.enterprisecloud.domain;
 
 import java.util.List;
 
-public class VApp {
+public class VAppType {
 	private String name;
 	private String description;
-    private List <ChildVm> childVms;
+    private List <VmType> vms;
     
-	public VApp() {
+	public VAppType() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public VApp(String name, String description, List <ChildVm> childVms) {
+	public VAppType(String name, String description, List <VmType> vms) {
 		super();
 		this.name = name;
 		this.description = description;
+		this.setVms(vms);
 	}
 
 	public String getName() {
@@ -34,12 +35,18 @@ public class VApp {
 		this.description = description;
 	}
 
-	public List <ChildVm> getChildVms() {
-		return childVms;
+	/**
+	 * @return the vms
+	 */
+	public List <VmType> getVms() {
+		return vms;
 	}
 
-	public void setChildVms(List <ChildVm> childVms) {
-		this.childVms = childVms;
+	/**
+	 * @param vms the vms to set
+	 */
+	public void setVms(List <VmType> vms) {
+		this.vms = vms;
 	}
 
 }

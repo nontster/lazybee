@@ -1,18 +1,18 @@
 package th.co.ais.enterprisecloud.domain;
 
-public class GatewayInterface {
+public class GatewayInterfaceType {
 	private String displayName;
 	private InterfaceTypeEnums interfaceType;
-	private SubnetParticipation subnetParticipation;
+	private SubnetParticipationType subnetParticipation;
 	private Boolean useForDefaultRoute;
 	
-	public GatewayInterface() {
+	public GatewayInterfaceType() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public GatewayInterface(String displayName, InterfaceTypeEnums interfaceType,
-			SubnetParticipation subnetParticipation, Boolean useForDefaultRoute) {
+	public GatewayInterfaceType(String displayName, InterfaceTypeEnums interfaceType,
+			SubnetParticipationType subnetParticipation, Boolean useForDefaultRoute) {
 		super();
 		this.displayName = displayName;
 		this.interfaceType = interfaceType;
@@ -36,11 +36,11 @@ public class GatewayInterface {
 		this.interfaceType = interfaceType;
 	}
 
-	public SubnetParticipation getSubnetParticipation() {
+	public SubnetParticipationType getSubnetParticipation() {
 		return subnetParticipation;
 	}
 
-	public void setSubnetParticipation(SubnetParticipation subnetParticipation) {
+	public void setSubnetParticipation(SubnetParticipationType subnetParticipation) {
 		this.subnetParticipation = subnetParticipation;
 	}
 

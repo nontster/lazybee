@@ -1,16 +1,16 @@
 package th.co.ais.enterprisecloud.domain;
 
-public class OrgGeneralSettings {
+public class OrgGeneralSettingsType {
 	private Integer storedVmQuota;
 	private Integer deployedVMQuota;
 	private Boolean canPublishCatalogs;
 	
-	public OrgGeneralSettings() {
+	public OrgGeneralSettingsType() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public OrgGeneralSettings(Integer storedVmQuota, Integer deployedVMQuota, Boolean canPublishCatalogs) {
+	public OrgGeneralSettingsType(Integer storedVmQuota, Integer deployedVMQuota, Boolean canPublishCatalogs) {
 		super();
 		this.storedVmQuota = storedVmQuota;
 		this.deployedVMQuota = deployedVMQuota;

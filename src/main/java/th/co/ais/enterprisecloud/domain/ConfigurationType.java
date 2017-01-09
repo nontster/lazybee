@@ -2,17 +2,17 @@ package th.co.ais.enterprisecloud.domain;
 
 import java.util.List;
 
-public class Configuration {
+public class ConfigurationType {
 	private Boolean retainNetInfoAcrossDeployments;
-	private FenceMode fenceMode;
-	private List<IpScope> ipScopes;
+	private FenceModeType fenceMode;
+	private List<IpScopeType> ipScopes;
 	
-	public Configuration() {
+	public ConfigurationType() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Configuration(Boolean retainNetInfoAcrossDeployments, FenceMode fenceMode, List<IpScope> ipScopes) {
+	public ConfigurationType(Boolean retainNetInfoAcrossDeployments, FenceModeType fenceMode, List<IpScopeType> ipScopes) {
 		super();
 		this.retainNetInfoAcrossDeployments = retainNetInfoAcrossDeployments;
 		this.fenceMode = fenceMode;
@@ -27,19 +27,19 @@ public class Configuration {
 		this.retainNetInfoAcrossDeployments = retainNetInfoAcrossDeployments;
 	}
 
-	public FenceMode getFenceMode() {
+	public FenceModeType getFenceMode() {
 		return fenceMode;
 	}
 
-	public void setFenceMode(FenceMode fenceMode) {
+	public void setFenceMode(FenceModeType fenceMode) {
 		this.fenceMode = fenceMode;
 	}
 
-	public List<IpScope> getIpScopes() {
+	public List<IpScopeType> getIpScopes() {
 		return ipScopes;
 	}
 
-	public void setIpScopes(List<IpScope> ipScopes) {
+	public void setIpScopes(List<IpScopeType> ipScopes) {
 		this.ipScopes = ipScopes;
 	}
 	

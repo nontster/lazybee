@@ -1,15 +1,15 @@
 package th.co.ais.enterprisecloud.domain;
 
-public class IpRange {
+public class IpRangeType {
 	private String startAddress;
 	private String endAddress;
 	
-	public IpRange() {
+	public IpRangeType() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public IpRange(String startAddress, String endAddress) {
+	public IpRangeType(String startAddress, String endAddress) {
 		super();
 		this.startAddress = startAddress;
 		this.endAddress = endAddress;

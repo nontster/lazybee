@@ -1,16 +1,16 @@
 package th.co.ais.enterprisecloud.domain;
 
-public class OrgPasswordPolicySettings {
+public class OrgPasswordPolicySettingsType {
 	private Boolean accountLockoutEnabled;
 	private Integer accountLockoutIntervalMinutes;
 	private Integer invalidLoginsBeforeLockout;
 	
-	public OrgPasswordPolicySettings() {
+	public OrgPasswordPolicySettingsType() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
-	public OrgPasswordPolicySettings(Boolean accountLockoutEnabled, Integer accountLockoutIntervalMinutes,
+	public OrgPasswordPolicySettingsType(Boolean accountLockoutEnabled, Integer accountLockoutIntervalMinutes,
 			Integer invalidLoginsBeforeLockout) {
 		super();
 		this.accountLockoutEnabled = accountLockoutEnabled;

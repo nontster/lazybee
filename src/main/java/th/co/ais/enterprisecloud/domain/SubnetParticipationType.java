@@ -2,17 +2,17 @@ package th.co.ais.enterprisecloud.domain;
 
 import java.util.List;
 
-public class SubnetParticipation {
+public class SubnetParticipationType {
 	private String gateway;
 	private String netmask;
-	private List<IpRange> ipRanges;
+	private List<IpRangeType> ipRanges;
 	
-	public SubnetParticipation() {
+	public SubnetParticipationType() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public SubnetParticipation(String gateway, String netmask, List<IpRange> ipRanges) {
+	public SubnetParticipationType(String gateway, String netmask, List<IpRangeType> ipRanges) {
 		super();
 		this.gateway = gateway;
 		this.netmask = netmask;
@@ -34,11 +34,11 @@ public class SubnetParticipation {
 		this.netmask = netmask;
 	}
 
-	public List<IpRange> getIpRanges() {
+	public List<IpRangeType> getIpRanges() {
 		return ipRanges;
 	}
 
-	public void setIpRanges(List<IpRange> ipRanges) {
+	public void setIpRanges(List<IpRangeType> ipRanges) {
 		this.ipRanges = ipRanges;
 	}
 	

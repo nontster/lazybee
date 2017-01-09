@@ -7,12 +7,13 @@
     </xs:complexType>
 
     <xs:complexType name="vmType">
+    	<xs:attribute name="vmName" type="xs:string"></xs:attribute>
     	<xs:attribute name="nonMobileNumber" use="required">
     		<xs:simpleType>
     			<xs:restriction base="xs:string"></xs:restriction>
     		</xs:simpleType>
     	</xs:attribute>
-    	<xs:attribute name="osImageName" use="required" type="xs:string">
+    	<xs:attribute name="osName" use="required" type="xs:string">
     	</xs:attribute>
     	<xs:attribute name="noOfCpus" use="required">
     		<xs:simpleType>
@@ -36,6 +37,7 @@
     	</xs:attribute>
     	<xs:attribute name="username" type="xs:string" use="required"></xs:attribute>
     	<xs:attribute name="password" type="xs:string" use="required"></xs:attribute>
+    	<xs:attribute name="ipAddress" type="xs:string"></xs:attribute>
     </xs:complexType>
 
 
@@ -100,9 +102,9 @@
     <xs:complexType name="firewallRuleType">
     	<xs:attribute name="name" type="xs:string" use="required"></xs:attribute>
     	<xs:attribute name="sourceIp" type="xs:string" use="required"></xs:attribute>
-    	<xs:attribute name="sourcePort" type="xs:int" use="required"></xs:attribute>
+    	<xs:attribute name="sourcePort" type="xs:string" use="required"></xs:attribute>
     	<xs:attribute name="destinationIp" type="xs:string" use="required"></xs:attribute>
-    	<xs:attribute name="destinationPort" type="xs:int" use="required"></xs:attribute>
+    	<xs:attribute name="destinationPortRange" type="xs:string" use="required"></xs:attribute>
     	<xs:attribute name="protocol" use="required">
     		<xs:simpleType>
     			<xs:restriction base="xs:string">
@@ -122,8 +124,8 @@
 
 
     <xs:complexType name="vmsType">
-    	<xs:sequence>
-    		<xs:element name="vm" type="vmType"></xs:element>
+    	<xs:sequence minOccurs="1" maxOccurs="unbounded">
+    		<xs:element name="vm" type="vmType" minOccurs="1" maxOccurs="unbounded"></xs:element>
     	</xs:sequence>
     </xs:complexType>
 

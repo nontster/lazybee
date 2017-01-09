@@ -5,11 +5,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import th.co.ais.enterprisecloud.domain.request.OrganizationType;
+import th.co.ais.enterprisecloud.domain.request.UserType;
+import th.co.ais.enterprisecloud.domain.request.VmType;
 import th.co.ais.enterprisecloud.exception.InvalidParameterException;
-import th.co.ais.enterprisecloud.exception.MissingParameterException;
-import th.co.ais.enterprisecloud.model.request.OrganizationType;
-import th.co.ais.enterprisecloud.model.request.UserType;
-import th.co.ais.enterprisecloud.model.request.VmType;
+import th.co.ais.enterprisecloud.exception.MissingInputParameterException;
 
 @Component
 public class ParamsValidatorImpl implements ParamsValidator {
@@ -17,31 +17,33 @@ public class ParamsValidatorImpl implements ParamsValidator {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Override
-	public Boolean validate(OrganizationType org) throws MissingParameterException, InvalidParameterException {
+	public Boolean validate(OrganizationType org) throws MissingInputParameterException, InvalidParameterException {
 		// TODO Auto-generated method stub
 				
+		logger.debug("validating input parameters");
+		
 		if(org.getCaNumber() == null) {
 			String errMsg = "Missing CA number parameter";
 			logger.error(errMsg);
-			throw new MissingParameterException(errMsg);
+			throw new MissingInputParameterException(errMsg);
 		}
 		
 		if(org.getName() == null){
 			String errMsg = "Missing customer name parameter";
 			logger.error(errMsg);
-			throw new MissingParameterException(errMsg);			
+			throw new MissingInputParameterException(errMsg);			
 		} 
 		
 		if(org.getOrderId() == null){
 			String errMsg = "Missing OrderId parameter";
 			logger.error(errMsg);
-			throw new MissingParameterException(errMsg);
+			throw new MissingInputParameterException(errMsg);
 		}
 		
 		if(org.getOrderType() == null){
 			String errMsg = "Missing orderType parameter";
 			logger.error(errMsg);
-			throw new MissingParameterException(errMsg);
+			throw new MissingInputParameterException(errMsg);
 		} else if(!org.getOrderType().equalsIgnoreCase("trial") && !org.getOrderType().equalsIgnoreCase("standard") && !org.getOrderType().equalsIgnoreCase("customized")){			
 			String errMsg = "Wrong orderType parameter, only trial|standard|customized permitted";
 			logger.error(errMsg);
@@ -51,19 +53,19 @@ public class ParamsValidatorImpl implements ParamsValidator {
 		if(org.getShortName() == null){
 			String errMsg = "Missing shortName parameter";
 			logger.error(errMsg);
-			throw new MissingParameterException(errMsg);
+			throw new MissingInputParameterException(errMsg);
 		}
 		
 		if(org.getUsers() == null){
 			String errMsg = "Missing users parameter";
 			logger.error(errMsg);
-			throw new MissingParameterException(errMsg);
+			throw new MissingInputParameterException(errMsg);
 		}
 		
 		if(org.getUsers().getUser() == null){
 			String errMsg = "Missing user parameter";
 			logger.error(errMsg);
-			throw new MissingParameterException(errMsg);			
+			throw new MissingInputParameterException(errMsg);			
 		}
 				
 		for(UserType user : org.getUsers().getUser()){
@@ -74,7 +76,7 @@ public class ParamsValidatorImpl implements ParamsValidator {
 			if(email == null){
 				String errMsg = "Missing email parameter";
 				logger.error(errMsg);
-				throw new MissingParameterException(errMsg);
+				throw new MissingInputParameterException(errMsg);
 			} else {
 				EmailValidator emailValidator = EmailValidator.getInstance();
 				if(!emailValidator.isValid(email)){
@@ -87,7 +89,7 @@ public class ParamsValidatorImpl implements ParamsValidator {
 			if(fullName == null){
 				String errMsg = "Missing fullName parameter";
 				logger.error(errMsg);
-				throw new MissingParameterException(errMsg);
+				throw new MissingInputParameterException(errMsg);
 			}
 		}
 
@@ -95,13 +97,13 @@ public class ParamsValidatorImpl implements ParamsValidator {
 		if(org.getVms() == null){
 			String errMsg = "Missing vms parameter";
 			logger.error(errMsg);
-			throw new MissingParameterException(errMsg);
+			throw new MissingInputParameterException(errMsg);
 		}
 		
 		if(org.getVms().getVm() == null){
 			String errMsg = "Missing vm parameter";
 			logger.error(errMsg);
-			throw new MissingParameterException(errMsg);			
+			throw new MissingInputParameterException(errMsg);			
 		}
 		
 		for(VmType vm : org.getVms().getVm()){
@@ -126,17 +128,16 @@ public class ParamsValidatorImpl implements ParamsValidator {
 			if(vm.getOsImageName() == null){
 				String errMsg = "Missing osImageName parameter";
 				logger.error(errMsg);
-				throw new MissingParameterException(errMsg);	
+				throw new MissingInputParameterException(errMsg);	
 			}
 			
 			if(vm.getNonMobileNumber() == null){
 				String errMsg = "Missing nonMobileNumber parameter";
 				logger.error(errMsg);
-				throw new MissingParameterException(errMsg);
+				throw new MissingInputParameterException(errMsg);
 			}
 		}
 		
 		return Boolean.TRUE;
 	}
-
 }

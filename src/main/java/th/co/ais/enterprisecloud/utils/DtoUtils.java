@@ -31,15 +31,20 @@ public class DtoUtils {
 		out.setOrderType(OrderType.valueOf(in.getOrderType().toUpperCase()));
 		
 		// Transfer UserType object
-		th.co.ais.enterprisecloud.domain.UserType inUser = new th.co.ais.enterprisecloud.domain.UserType();	
-		inUser.setEmailAddress(in.getUsers().getUser().get(0).getEmail());
-		inUser.setFullName(in.getUsers().getUser().get(0).getFullName());
-		inUser.setPhone(in.getUsers().getUser().get(0).getPhone());
+		th.co.ais.enterprisecloud.domain.UserType inUser = new th.co.ais.enterprisecloud.domain.UserType();
+		if (in.getUsers() != null && in.getUsers().getUser() != null && !in.getUsers().getUser().isEmpty()) {
+			inUser.setEmailAddress(in.getUsers().getUser().get(0).getEmail());
+			inUser.setFullName(in.getUsers().getUser().get(0).getFullName());
+			inUser.setPhone(in.getUsers().getUser().get(0).getPhone());
+		}
 				
 		th.co.ais.enterprisecloud.domain.UserType outUser = new th.co.ais.enterprisecloud.domain.UserType();
-		outUser.setEmailAddress(inUser.getEmailAddress());
-		outUser.setFullName(inUser.getFullName());
-		outUser.setPhone(inUser.getPhone());
+		if (inUser.getEmailAddress() != null)
+			outUser.setEmailAddress(inUser.getEmailAddress());
+		if (inUser.getFullName() != null)
+			outUser.setFullName(inUser.getFullName());
+		if (inUser.getPhone() != null)
+			outUser.setPhone(inUser.getPhone());
 		
 		out.setUser(outUser);
 

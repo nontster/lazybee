@@ -80,7 +80,7 @@ public class NetworkUtils {
 	 *
 	 * @return The IP address as a number
 	 */
-	Long ipToLong(String ipAddress) {
+	public Long ipToLong(String ipAddress) {
 		long result = 0;
 		String[] atoms = ipAddress.split("\\.");
 
@@ -99,7 +99,7 @@ public class NetworkUtils {
 	 *
 	 * @return The IP address as a string
 	 */
-	String longToIp(long ip) {
+	public String longToIp(long ip) {
 		StringBuilder sb = new StringBuilder(15);
 
 		for (int i = 0; i < 4; i++) {
@@ -535,7 +535,6 @@ public class NetworkUtils {
 			addFirewallRule(fwRules, "PING OUT", "ICMP", "10.1.1.0/24", "Any", "Any");
 			addFirewallRule(fwRules, "DNS OUT", "UDP", "10.1.1.0/24", "Any", "53");
 			addFirewallRule(fwRules, "NTP OUT", "UDP", "10.1.1.0/24", "Any", "123");
-			addFirewallRule(fwRules, "HTTP OUT", "TCP", "10.1.1.0/24", "Any", "80");
 			addFirewallRule(fwRules, "HTTP OUT", "TCP", "10.1.1.0/24", "Any", "80");
 			addFirewallRule(fwRules, "HTTPS OUT", "TCP", "10.1.1.0/24", "Any", "443");
 			addFirewallRule(fwRules, "PING IN", "ICMP", "Any", "internal", "Any");

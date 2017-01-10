@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.vmware.vcloud.sdk.VCloudException;
 
 import th.co.ais.enterprisecloud.service.CloudService;
+import th.co.ais.enterprisecloud.utils.DtoUtils;
 import th.co.ais.enterprisecloud.utils.ParamsValidator;
 
 @RestController
@@ -26,11 +27,13 @@ public class ProvisioningController {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	private CloudService service;
 	private ParamsValidator validator;
+	private DtoUtils dtoUtils;
 	
-	public ProvisioningController(CloudService service, ParamsValidator validator) {
+	public ProvisioningController(CloudService service, ParamsValidator validator, DtoUtils dtoUtils) {
 		super();
 		this.service = service;
 		this.validator = validator;
+		this.dtoUtils = dtoUtils;
 	}
 
 	@RequestMapping(value="/orgs", method=RequestMethod.POST)
@@ -43,7 +46,7 @@ public class ProvisioningController {
 				
 		validator.validate(req);
 			
-		th.co.ais.enterprisecloud.domain.OrganizationType org = service.transfer(req);
+		th.co.ais.enterprisecloud.domain.OrganizationType org = dtoUtils.transfer(req);
 		Future<th.co.ais.enterprisecloud.domain.response.OrganizationType> res = service.provisioning(org);	
 					
 		// Wait until they are all done
@@ -53,7 +56,7 @@ public class ProvisioningController {
 	        				
 		//org.add(linkTo(methodOn(ProvisioningController.class).provisioning(param)).withSelfRel());
 		
-		return new ResponseEntity<th.co.ais.enterprisecloud.domain.response.OrganizationType>(res.get(), HttpStatus.OK); 
+		return new ResponseEntity<th.co.ais.enterprisecloud.domain.response.OrganizationType>(res.get(), HttpStatus.CREATED); 
 	}
 		
 }

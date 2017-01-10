@@ -21,8 +21,18 @@ public class ParamsValidatorImpl implements ParamsValidator {
 		// TODO Auto-generated method stub
 				
 		logger.debug("validating input parameters");
+
+		if(org.getOrderType() == null){
+			String errMsg = "Missing orderType parameter";
+			logger.error(errMsg);
+			throw new MissingInputParameterException(errMsg);
+		} else if(!org.getOrderType().equalsIgnoreCase("trial") && !org.getOrderType().equalsIgnoreCase("standard") && !org.getOrderType().equalsIgnoreCase("customized")){			
+			String errMsg = "Wrong orderType parameter, only trial|standard|customized permitted";
+			logger.error(errMsg);
+			throw new InvalidParameterException(errMsg);
+		}
 		
-		if(org.getCaNumber() == null) {
+		if(org.getOrderType().equalsIgnoreCase("trial") && org.getCaNumber() == null) {
 			String errMsg = "Missing CA number parameter";
 			logger.error(errMsg);
 			throw new MissingInputParameterException(errMsg);
@@ -39,17 +49,7 @@ public class ParamsValidatorImpl implements ParamsValidator {
 			logger.error(errMsg);
 			throw new MissingInputParameterException(errMsg);
 		}
-		
-		if(org.getOrderType() == null){
-			String errMsg = "Missing orderType parameter";
-			logger.error(errMsg);
-			throw new MissingInputParameterException(errMsg);
-		} else if(!org.getOrderType().equalsIgnoreCase("trial") && !org.getOrderType().equalsIgnoreCase("standard") && !org.getOrderType().equalsIgnoreCase("customized")){			
-			String errMsg = "Wrong orderType parameter, only trial|standard|customized permitted";
-			logger.error(errMsg);
-			throw new InvalidParameterException(errMsg);
-		}
-		
+				
 		if(org.getShortName() == null){
 			String errMsg = "Missing shortName parameter";
 			logger.error(errMsg);
@@ -62,7 +62,7 @@ public class ParamsValidatorImpl implements ParamsValidator {
 			throw new MissingInputParameterException(errMsg);
 		}
 		
-		if(org.getUsers().getUser() == null){
+		if(org.getUsers() == null || org.getUsers().getUser() == null || org.getUsers().getUser().isEmpty()){
 			String errMsg = "Missing user parameter";
 			logger.error(errMsg);
 			throw new MissingInputParameterException(errMsg);			
@@ -100,7 +100,7 @@ public class ParamsValidatorImpl implements ParamsValidator {
 			throw new MissingInputParameterException(errMsg);
 		}
 		
-		if(org.getVms().getVm() == null){
+		if(org.getVms().getVm() == null || org.getVms().getVm().isEmpty()){
 			String errMsg = "Missing vm parameter";
 			logger.error(errMsg);
 			throw new MissingInputParameterException(errMsg);			

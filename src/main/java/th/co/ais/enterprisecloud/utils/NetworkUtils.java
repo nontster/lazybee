@@ -179,15 +179,19 @@ public class NetworkUtils {
 			throw new InsufficientIPAddressesException(errMsg.toString());
 		}
 
-		int startIdx = 0;
+		int endIdx = 0;
 
+		// reserve 1 for VSE which automatically allocated
+		numIP = numIP + 1; 
+		
 		// validate array index
 		if (ipsAll.size() - numIP < 0)
-			startIdx = 0;
+			endIdx = ipsAll.size();
 		else
-			startIdx = ipsAll.size() - numIP;
+			endIdx = numIP;
 
-		return ipsAll.subList(startIdx, ipsAll.size());
+		// Skip index 0 for VSE
+		return ipsAll.subList(1, endIdx);
 	}
 	
 	private void addNatRule(GatewayInterfaceType gatewayInterface, NatServiceType natService, String pubIP, String privIP) {

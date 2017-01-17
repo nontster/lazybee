@@ -108,9 +108,10 @@ public class VCloudDirectorService implements CloudService {
 		if (task != null)
 			task.waitForTask(0);
 		logger.info("Add New Organization : "+adminOrg.getResource().getName()+" - "+adminOrg.getResource().getHref());
-		
-		// Set vCloud director URL for organization
-		org.setUrl(prop.getUrl() + "cloud/org/" + org.getName() + "/");
+		logger.info("Organization Id: "+adminOrg.getResource().getId());
+		// Set vCloud director URL for organization		
+		String vcdurl = ((prop.getUrl().length() - 1)!= '/')? prop.getUrl()+'/' : prop.getUrl();		
+		org.setUrl(vcdurl + "cloud/org/" + org.getName() + "/");
 
 		// Create vDC You may end using one of the following.
 		adminVdc = this.vdcUtils.addPayAsYouGoVdc(org, admin, client, adminOrg, prop);

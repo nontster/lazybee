@@ -36,7 +36,7 @@ public class ProvisioningController {
 		this.dtoUtils = dtoUtils;
 	}
 
-	@RequestMapping(value="/orgs", method=RequestMethod.POST)
+	@RequestMapping(value = "/api/admin/orgs", method = RequestMethod.POST, consumes = "application/vnd.ais.admin.organization+xml;version=1.0")
 	@ResponseBody
 	public HttpEntity<th.co.ais.enterprisecloud.domain.response.OrganizationType> provisioning(
 			@RequestBody th.co.ais.enterprisecloud.domain.request.OrganizationType req)

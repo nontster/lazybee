@@ -1,1 +1,4 @@
 /vcloud.properties
+/keystore.jks
+/application-dev.yml
+/application-production.yml

@@ -19,6 +19,11 @@ import com.vmware.vcloud.api.rest.schema.GatewayNatRuleType;
 import com.vmware.vcloud.api.rest.schema.NatRuleType;
 import com.vmware.vcloud.api.rest.schema.NatServiceType;
 import com.vmware.vcloud.api.rest.schema.NetworkConnectionType;
+import com.vmware.vcloud.api.rest.schema.ReferenceType;
+import com.vmware.vcloud.sdk.Expression;
+import com.vmware.vcloud.sdk.Filter;
+import com.vmware.vcloud.sdk.QueryParams;
+import com.vmware.vcloud.sdk.ReferenceResult;
 import com.vmware.vcloud.sdk.Task;
 import com.vmware.vcloud.sdk.VCloudException;
 import com.vmware.vcloud.sdk.VM;
@@ -32,7 +37,11 @@ import com.vmware.vcloud.sdk.admin.EdgeGateway;
 import com.vmware.vcloud.sdk.admin.ExternalNetwork;
 import com.vmware.vcloud.sdk.admin.VcloudAdmin;
 import com.vmware.vcloud.sdk.constants.Version;
+import com.vmware.vcloud.sdk.constants.query.ExpressionType;
+import com.vmware.vcloud.sdk.constants.query.QueryReferenceField;
+import com.vmware.vcloud.sdk.constants.query.QueryReferenceType;
 
+import th.co.ais.enterprisecloud.exception.InvalidParameterException;
 import th.co.ais.enterprisecloud.utils.NetworkUtils;
 import th.co.ais.enterprisecloud.utils.OrgUtils;
 import th.co.ais.enterprisecloud.utils.UserUtils;
@@ -337,5 +346,39 @@ public class VCloudDirectorService implements CloudService {
 
 	public AdminOrganization getAdminOrg() {
 		return adminOrg;
+	}
+
+	@Override
+	public Future<Boolean> findOrgByName(String orgName) throws VCloudException {
+
+		if(!orgName.matches("^[a-zA-Z0-9_\\-]*$"))
+			throw new InvalidParameterException("Allow only Alphabet, Number, Minus and Underscore");
+						
+		if(orgName.length() > 10)
+			throw new InvalidParameterException("name parameter cannot logner than 10 characters");
+		
+		AdminOrganization checkedAdminOrg = null;
+		Boolean existStatus = Boolean.FALSE;
+
+		connect();
+		
+		QueryParams<QueryReferenceField> params = new QueryParams<QueryReferenceField>();
+		Filter filter = new Filter(new Expression(QueryReferenceField.NAME, orgName, ExpressionType.EQUALS));
+		params.setFilter(filter);
+      
+		ReferenceResult result  = client.getQueryService().queryReferences(QueryReferenceType.ORGANIZATION, params);
+		
+		for (ReferenceType orgReference : result.getReferences()) {
+			checkedAdminOrg = AdminOrganization.getAdminOrgById(client, orgReference.getId());
+			System.out.println(checkedAdminOrg.getResource().getName());
+		}
+					
+		if(checkedAdminOrg != null){
+			existStatus = Boolean.TRUE;					
+		}
+					
+		disconnect();
+		
+		return new AsyncResult<>(existStatus);
 	}
 }

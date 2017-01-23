@@ -15,5 +15,7 @@ public interface CloudService {
 	
 	public Future<th.co.ais.enterprisecloud.domain.response.OrganizationType> provisioning(th.co.ais.enterprisecloud.domain.OrganizationType in) throws VCloudException, TimeoutException;
 	
+	public Future<Boolean> findOrgByName(String orgName) throws VCloudException; 
+	
 	public void disconnect() throws VCloudException;
 }

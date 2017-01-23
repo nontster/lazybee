@@ -161,4 +161,12 @@ public class StagingService implements CloudService {
 		return new AsyncResult<>(res);
 	}
 
+	@Override
+	public Future<Boolean> findOrgByName(String orgName) {
+		// TODO Auto-generated method stub
+		logger.debug("findOrgByName(orgName) called, orgName="+ orgName);
+						
+		return new AsyncResult<>(Boolean.FALSE);
+	}
+
 }

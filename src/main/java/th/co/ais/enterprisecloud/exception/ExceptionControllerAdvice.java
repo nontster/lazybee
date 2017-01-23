@@ -15,7 +15,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class ExceptionControllerAdvice extends ResponseEntityExceptionHandler{
 
 	@ResponseStatus(HttpStatus.NOT_FOUND)
-	@ExceptionHandler({ ExternalNetworkNotFoundException.class, InsufficientIPAddressesException.class,
+	@ExceptionHandler({ ExternalNetworkNotFoundException.class, MissingInputParameterException.class, InsufficientIPAddressesException.class,
 			MissingVmTemplateException.class, UserRoleNotFoundException.class, VdcNetworkNotAvailableException.class })
 	public @ResponseBody ExceptionResponse handleNotFoundException(HttpServletRequest request, RuntimeException ex) {
 		ExceptionResponse response = new ExceptionResponse();
@@ -29,14 +29,14 @@ public class ExceptionControllerAdvice extends ResponseEntityExceptionHandler{
 		return response;
 	}
 
-	@ResponseStatus(HttpStatus.NOT_FOUND)
-	@ExceptionHandler({MissingInputParameterException.class, InvalidParameterException.class, InvalidTemplateException.class})
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ExceptionHandler({InvalidParameterException.class, InvalidTemplateException.class})
 	public @ResponseBody ExceptionResponse handleBadRequestException(HttpServletRequest request, RuntimeException ex) {
 		ExceptionResponse response = new ExceptionResponse();
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		
 		response.setTimestamp(timestamp.getTime());
-		response.setStatus(HttpStatus.NOT_FOUND.value());
+		response.setStatus(HttpStatus.BAD_REQUEST.value());
 		response.setPath(request.getServletPath()); 
 		response.setMessage(ex.getMessage());
 

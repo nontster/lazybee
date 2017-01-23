@@ -299,6 +299,8 @@ public class VdcUtils {
 		
 		if(org.getOrderType().name().equalsIgnoreCase(OrderType.TRIAL.name()))
 			vdcName.append("trial-");
+		else if(org.getOrderType().name().equalsIgnoreCase(OrderType.TEST.name()))
+			vdcName.append("test-");
 		if(org.getShortName() != null && !org.getShortName().isEmpty())
 			vdcName.append(org.getShortName());
 		else

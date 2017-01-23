@@ -302,6 +302,8 @@ public class NetworkUtils {
 		else{
 			if(org.getOrderType() == OrderType.TRIAL)
 				edgeGatewayName.append("Trial-");
+			else if(org.getOrderType() == OrderType.TEST)
+				edgeGatewayName.append("Test-");
 			
 			edgeGatewayName.append(org.getShortName());
 			edgeGatewayName.append("-edgegw-01");

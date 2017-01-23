@@ -81,8 +81,8 @@
     		<xs:simpleType>
     			<xs:restriction base="xs:string">
     				<xs:enumeration value="trial"></xs:enumeration>
-    				<xs:enumeration value="standard"></xs:enumeration>
-    				<xs:enumeration value="customize"></xs:enumeration>
+    				<xs:enumeration value="new"></xs:enumeration>
+    				<xs:enumeration value="test"></xs:enumeration>
     			</xs:restriction>
     		</xs:simpleType>
     	</xs:attribute>
@@ -91,7 +91,7 @@
     		<xs:simpleType>
     			<xs:restriction base="xs:string">
     				<xs:minLength value="3"></xs:minLength>
-    				<xs:maxLength value="64"></xs:maxLength>
+    				<xs:maxLength value="10"></xs:maxLength>
     			</xs:restriction>
     		</xs:simpleType>
     	</xs:attribute>

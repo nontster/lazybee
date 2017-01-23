@@ -115,6 +115,8 @@ public class OrgUtils {
 				
 			if(org.getOrderType().name().equalsIgnoreCase("trial"))
 				orgName.append("Trial-");	
+			else if(org.getOrderType().name().equalsIgnoreCase("test"))
+				orgName.append("Test-");	
 				
 			orgName.append(org.getShortName());
 				

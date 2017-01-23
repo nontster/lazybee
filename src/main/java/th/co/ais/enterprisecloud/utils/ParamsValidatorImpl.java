@@ -26,13 +26,13 @@ public class ParamsValidatorImpl implements ParamsValidator {
 			String errMsg = "Missing orderType parameter";
 			logger.error(errMsg);
 			throw new MissingInputParameterException(errMsg);
-		} else if(!org.getOrderType().equalsIgnoreCase("trial") && !org.getOrderType().equalsIgnoreCase("standard") && !org.getOrderType().equalsIgnoreCase("customized")){			
-			String errMsg = "Wrong orderType parameter, only trial|standard|customized permitted";
+		} else if(!org.getOrderType().equalsIgnoreCase("trial") && !org.getOrderType().equalsIgnoreCase("new") && !org.getOrderType().equalsIgnoreCase("test")){			
+			String errMsg = "Wrong orderType parameter, only trial|new|test permitted";
 			logger.error(errMsg);
 			throw new InvalidParameterException(errMsg);
 		}
 		
-		if(org.getOrderType().equalsIgnoreCase("trial") && org.getCaNumber() == null) {
+		if(org.getOrderType().equalsIgnoreCase("new") && org.getCaNumber() == null) {
 			String errMsg = "Missing CA number parameter";
 			logger.error(errMsg);
 			throw new MissingInputParameterException(errMsg);
@@ -54,6 +54,10 @@ public class ParamsValidatorImpl implements ParamsValidator {
 			String errMsg = "Missing shortName parameter";
 			logger.error(errMsg);
 			throw new MissingInputParameterException(errMsg);
+		} else if(org.getShortName().length() > 10){
+			String errMsg = "shortName parameter cannot logner than 10 characters";
+			logger.error(errMsg);
+			throw new InvalidParameterException(errMsg);
 		}
 		
 		if(org.getUsers() == null){
@@ -108,21 +112,21 @@ public class ParamsValidatorImpl implements ParamsValidator {
 		
 		for(VmType vm : org.getVms().getVm()){
 			if(vm.getCoresPerSocket()< 1){
-				String errMsg = "Cores per socker less than 1";
+				String errMsg = "Cores per socket parameter not found or value less than 1";
 				logger.error(errMsg);
-				throw new InvalidParameterException(errMsg);
+				throw new MissingInputParameterException(errMsg);
 			}
 			
 			if(vm.getNoOfCpus()< 1){
-				String errMsg = "No. of cpus less than 1";
+				String errMsg = "No. of cpus parameter not found or value less than 1";
 				logger.error(errMsg);
-				throw new InvalidParameterException(errMsg);
+				throw new MissingInputParameterException(errMsg);
 			}
 			
 			if(vm.getMemorySize()< 1){
-				String errMsg = "Memory size less than 1GB";
+				String errMsg = "Memory size parameter not found or value less than 1GB";
 				logger.error(errMsg);
-				throw new InvalidParameterException(errMsg);
+				throw new MissingInputParameterException(errMsg);
 			}
 			
 			if(vm.getOsImageName() == null){

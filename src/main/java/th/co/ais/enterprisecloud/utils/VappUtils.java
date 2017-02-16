@@ -23,7 +23,6 @@ import com.vmware.vcloud.api.rest.schema.NetworkConnectionSectionType;
 import com.vmware.vcloud.api.rest.schema.NetworkConnectionType;
 import com.vmware.vcloud.api.rest.schema.ObjectFactory;
 import com.vmware.vcloud.api.rest.schema.QueryResultAdminVAppTemplateRecordType;
-import com.vmware.vcloud.api.rest.schema.QueryResultAdminVMRecordType;
 import com.vmware.vcloud.api.rest.schema.ReferenceType;
 import com.vmware.vcloud.api.rest.schema.SourcedCompositionItemParamType;
 import com.vmware.vcloud.api.rest.schema.VAppNetworkConfigurationType;
@@ -47,9 +46,7 @@ import com.vmware.vcloud.sdk.constants.FenceModeValuesType;
 import com.vmware.vcloud.sdk.constants.IpAddressAllocationModeType;
 import com.vmware.vcloud.sdk.constants.query.ExpressionType;
 import com.vmware.vcloud.sdk.constants.query.QueryAdminVAppTemplateField;
-import com.vmware.vcloud.sdk.constants.query.QueryAdminVMField;
 import com.vmware.vcloud.sdk.constants.query.QueryRecordType;
-
 import th.co.ais.enterprisecloud.domain.OrderType;
 import th.co.ais.enterprisecloud.domain.OrganizationType;
 import th.co.ais.enterprisecloud.exception.MissingVmTemplateException;
@@ -212,22 +209,6 @@ public class VappUtils {
 		
 		return null;	
 	}
-
-	static ReferenceType findVMByID(VcloudClient client, String vmId)
-			throws VCloudException {
-		ReferenceType vappTemplateRef = new ReferenceType();
-		
-		QueryParams<QueryAdminVMField> queryParams = new QueryParams<QueryAdminVMField>();
-		
-		queryParams.setFilter(new Filter(new Expression(QueryAdminVMField.ID, vmId, ExpressionType.EQUALS)));
-		
-		RecordResult<QueryResultAdminVMRecordType> vmResult = client.getQueryService().queryRecords(QueryRecordType.VM, queryParams);
-		for (QueryResultAdminVMRecordType vmRecord : vmResult.getRecords()) { 
-
-		}		
-		
-		return null;	
-	}
 	
 	public void reconfigureVms(Vapp vapp, OrganizationType org) throws VCloudException, TimeoutException {
 					
@@ -274,10 +255,10 @@ public class VappUtils {
 					// Set administrator password
 					GuestCustomizationSectionType guestCustomizationSection = vm.getGuestCustomizationSection();
 					
-					if(childVM.getComputerName() != null)
-						guestCustomizationSection.setComputerName(childVM.getComputerName());
+					if(childVM.getComputerName() != null) // allow only 15 characters long due to MS Windows limitation
+						guestCustomizationSection.setComputerName(childVM.getComputerName().substring(0, Math.min(childVM.getComputerName().length(), 15)));
 					else
-						guestCustomizationSection.setComputerName(childVM.getName());
+						guestCustomizationSection.setComputerName(childVM.getName().substring(0, Math.min(childVM.getName().length(), 15)));
 					
 					guestCustomizationSection.setAdminPasswordEnabled(Boolean.TRUE);
 					guestCustomizationSection.setAdminPasswordAuto(Boolean.FALSE);

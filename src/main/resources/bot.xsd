@@ -69,29 +69,33 @@
     <xs:element name="organization" type="OrganizationType"></xs:element>
     
     <xs:complexType name="OrganizationType">
-        <xs:all>
-            <xs:element name="cloudResources" type="CloudResourcesType" minOccurs="0" maxOccurs="1">
-        	</xs:element>
-            <xs:element name="orgSettings" type="OrgSettingsType"
-        		minOccurs="0" maxOccurs="1">
-        	</xs:element>
-        	<xs:element name="users" type="UsersType" minOccurs="1"
-        		maxOccurs="1">
-        	</xs:element>
-        	<xs:element name="vdc" type="VdcType" minOccurs="0"
-        		maxOccurs="1">
-        	</xs:element>
-        	<xs:element name="edgeGateway" type="EdgeGatewayType"
-        		minOccurs="0" maxOccurs="1">
-        	</xs:element>
-        	<xs:element name="orgVdcNetwork" type="OrgVdcNetworkType"
-        		minOccurs="0" maxOccurs="1">
-        	</xs:element>
-        	<xs:element name="vApp" type="VAppType" minOccurs="1" maxOccurs="1"></xs:element>
-        </xs:all>
+    	<xs:all>
+    		<xs:element name="cloudResources" type="CloudResourcesType"
+    			minOccurs="0" maxOccurs="1">
+    		</xs:element>
+    		<xs:element name="orgSettings" type="OrgSettingsType"
+    			minOccurs="0" maxOccurs="1">
+    		</xs:element>
+    		<xs:element name="users" type="UsersType" minOccurs="1"
+    			maxOccurs="1">
+    		</xs:element>
+    		<xs:element name="vdc" type="VdcType" minOccurs="0"
+    			maxOccurs="1">
+    		</xs:element>
+    		<xs:element name="edgeGateway" type="EdgeGatewayType"
+    			minOccurs="0" maxOccurs="1">
+    		</xs:element>
+    		<xs:element name="orgVdcNetwork" type="OrgVdcNetworkType"
+    			minOccurs="0" maxOccurs="1">
+    		</xs:element>
+    		<xs:element name="vApp" type="VAppType" minOccurs="1"
+    			maxOccurs="1">
+    		</xs:element>
+    	</xs:all>
 
 
 
+        <xs:attribute name="id" type="xs:string"></xs:attribute>
         <xs:attribute name="orderId" type="xs:string" use="required"></xs:attribute>
     	<xs:attribute name="name" use="required">
     		<xs:simpleType>
@@ -125,7 +129,7 @@
 
 
 
-    
+
     <xs:complexType name="OrgSettingsType">
         <xs:all>
     		<xs:element name="orgLeaseSettings" type="OrgLeaseSettingsType" minOccurs="0" maxOccurs="1">

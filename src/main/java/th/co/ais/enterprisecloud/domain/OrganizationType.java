@@ -1,6 +1,9 @@
 package th.co.ais.enterprisecloud.domain;
 
+import java.util.UUID;
+
 public class OrganizationType {
+	private UUID id;
 	private String name;
 	private String description;
 	private String shortName;
@@ -22,10 +25,11 @@ public class OrganizationType {
 		// TODO Auto-generated constructor stub
 	}
 
-	public OrganizationType(String name, String description, Boolean enabled, OrderType orderType,
+	public OrganizationType(UUID id, String name, String description, Boolean enabled, OrderType orderType,
 			String caNumber, String orderId, UserType user, OrgSettingsType orgSettings,
 			CloudResourcesType cloudResources, VdcType vdc, EdgeGatewayType edgeGateway, OrgVdcNetworkType orgVdcNetwork, VAppType vApp) {
 		super();
+		this.setId(id);
 		this.name = name;
 		this.description = description;
 		this.enabled = enabled;
@@ -38,6 +42,20 @@ public class OrganizationType {
 		this.edgeGateway = edgeGateway;
 		this.orgVdcNetwork = orgVdcNetwork;
 		this.vApp = vApp;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public UUID getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(UUID id) {
+		this.id = id;
 	}
 
 	public String getName() {

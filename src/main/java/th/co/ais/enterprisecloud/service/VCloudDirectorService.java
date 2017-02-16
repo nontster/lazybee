@@ -7,6 +7,7 @@ import java.util.concurrent.TimeoutException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
@@ -68,6 +69,7 @@ public class VCloudDirectorService implements CloudService {
 	private NetworkUtils networkUtils;
 	private VappUtils vappUtils;
 
+	@Autowired
 	public VCloudDirectorService(OrgUtils orgUtils, VdcUtils vdcUtils, UserUtils userUtils, NetworkUtils networkUtils,
 			VappUtils vappUtils, VcloudProperties prop) {
 		super();
@@ -77,13 +79,14 @@ public class VCloudDirectorService implements CloudService {
 		this.networkUtils = networkUtils;
 		this.vappUtils = vappUtils;
 		this.prop = prop;
+		
+		this.client = new VcloudClient(prop.getUrl(), Version.V5_5);
 	}
 
 	@Override
 	public void connect() throws VCloudException {
 		// TODO Auto-generated method stub
-		this.client = new VcloudClient(prop.getUrl(), Version.V5_5);
-
+		
 		this.client.login(prop.getUsername(), prop.getPassword());
 		logger.info("Success sigin to vCloud Director : "+prop.getUrl());
 		
@@ -110,7 +113,8 @@ public class VCloudDirectorService implements CloudService {
 	
 		th.co.ais.enterprisecloud.domain.response.OrganizationType res = new th.co.ais.enterprisecloud.domain.response.OrganizationType();
 	
-		connect();
+		if(!this.client.extendSession())
+			connect();
 		
 		adminOrg = admin.createAdminOrg(orgUtils.createNewAdminOrgType(org));
 		Task task = orgUtils.returnTask(client, adminOrg);
@@ -171,7 +175,7 @@ public class VCloudDirectorService implements CloudService {
 		
 		logger.info("Provisioning completed!");
 				
-		disconnect();
+		//disconnect();
 				
 		return new AsyncResult<>(res);
 	}
@@ -360,7 +364,8 @@ public class VCloudDirectorService implements CloudService {
 		AdminOrganization checkedAdminOrg = null;
 		Boolean existStatus = Boolean.FALSE;
 
-		connect();
+		if(!this.client.extendSession())
+			connect();
 		
 		QueryParams<QueryReferenceField> params = new QueryParams<QueryReferenceField>();
 		Filter filter = new Filter(new Expression(QueryReferenceField.NAME, orgName, ExpressionType.EQUALS));
@@ -377,7 +382,7 @@ public class VCloudDirectorService implements CloudService {
 			existStatus = Boolean.TRUE;					
 		}
 					
-		disconnect();
+		//disconnect();
 		
 		return new AsyncResult<>(existStatus);
 	}

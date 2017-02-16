@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertFalse;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -24,11 +25,13 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @ActiveProfiles("staging")
 @RunWith(SpringRunner.class)
@@ -40,13 +43,13 @@ public class LazybeeApplicationTests {
 		
 	@Autowired
     private TestRestTemplate restTemplate;
-	
+
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Test
 	public void provisioningSuccessTest() throws JAXBException {		
 		String body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><organization name=\"Virgin Media Limited\" orderId=\"09101010102939\" caNumber=\"90111045678\" orderType=\"trial\" shortName=\"VMED\" xmlns=\"http://enterprisecloud.ais.co.th/bot\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><users><user email=\"john.doe@virgin.com\" fullName=\"John Doe\" phone=\"0613952200\" /></users><vms><vm coresPerSocket=\"2\" memorySize=\"4\" noOfCpus=\"2\" nonMobileNumber=\"1234567890\" osImageName=\"CENTOS7\" /></vms></organization>";
-		
+				
 		HttpHeaders headers = new HttpHeaders();
 		Map<String,String> version = new HashMap<String,String>();
 		version.put("version", "1.0");
@@ -58,7 +61,7 @@ public class LazybeeApplicationTests {
 		headers.add("Accept", "application/vnd.ais.admin.organization+xml;version=1.0, application/json");
 		
 		HttpEntity<String> request = new HttpEntity<>(body, headers);
-		ResponseEntity<String> response = this.restTemplate.postForEntity("http://localhost:" + port + "/api/admin/orgs", request, String.class);
+		ResponseEntity<String> response = this.restTemplate.withBasicAuth("admin", "admin").postForEntity("http://localhost:" + port + "/api/admin/orgs", request, String.class);
 		
 		logger.info("Header: "+response.getHeaders());
 		logger.info("Body: "+response.getBody());
@@ -80,13 +83,16 @@ public class LazybeeApplicationTests {
 		String body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><organization name=\"Virgin Media Limited\" caNumber=\"90111045678\" orderType=\"trial\" shortName=\"VMED\" xmlns=\"http://enterprisecloud.ais.co.th/bot\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><users><user email=\"john.doe@virgin.com\" fullName=\"John Doe\" phone=\"0613952200\" /></users><vms><vm coresPerSocket=\"2\" memorySize=\"4\" noOfCpus=\"2\" nonMobileNumber=\"1234567890\" osImageName=\"CENTOS7\" /></vms></organization>";
 		
 		HttpHeaders headers = new HttpHeaders();
-		MediaType mediaType = new MediaType("application", "vnd.ais.v1+xml");
+		Map<String,String> version = new HashMap<String,String>();
+		version.put("version", "1.0");
+		
+		MediaType mediaType = new MediaType("application", "vnd.ais.admin.organization+xml", version);
 		headers.setContentType(mediaType);
 		headers.add("Accept-Charset", "UTF-8");
-		headers.add("Accept", "application/vnd.ais.v1+xml,application/json");
+		headers.add("Accept", "application/vnd.ais.admin.organization+xml;version=1.0, application/json");
 		
 		HttpEntity<String> request = new HttpEntity<>(body, headers);
-		ResponseEntity<String> response = this.restTemplate.postForEntity("http://localhost:" + port + "/orgs", request, String.class);
+		ResponseEntity<String> response = this.restTemplate.withBasicAuth("admin", "admin").postForEntity("http://localhost:" + port + "/api/admin/orgs", request, String.class);
 					
 		assertThat(response.getStatusCode()).isEqualByComparingTo(HttpStatus.NOT_FOUND);
 
@@ -95,16 +101,19 @@ public class LazybeeApplicationTests {
 	@Test
 	public void missingCaNumberTest(){
 		
-		String body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><organization name=\"Virgin Media Limited\" orderId=\"09101010102939\" orderType=\"trial\" shortName=\"VMED\" xmlns=\"http://enterprisecloud.ais.co.th/bot\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><users><user email=\"john.doe@virgin.com\" fullName=\"John Doe\" phone=\"0613952200\" /></users><vms><vm coresPerSocket=\"2\" memorySize=\"4\" noOfCpus=\"2\" nonMobileNumber=\"1234567890\" osImageName=\"CENTOS7\" /></vms></organization>";
+		String body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><organization name=\"Virgin Media Limited\" orderId=\"09101010102939\" orderType=\"new\" shortName=\"VMED\" xmlns=\"http://enterprisecloud.ais.co.th/bot\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><users><user email=\"john.doe@virgin.com\" fullName=\"John Doe\" phone=\"0613952200\" /></users><vms><vm coresPerSocket=\"2\" memorySize=\"4\" noOfCpus=\"2\" nonMobileNumber=\"1234567890\" osImageName=\"CENTOS7\" /></vms></organization>";
 
 		HttpHeaders headers = new HttpHeaders();
-		MediaType mediaType = new MediaType("application", "vnd.ais.v1+xml");
+		Map<String,String> version = new HashMap<String,String>();
+		version.put("version", "1.0");
+		
+		MediaType mediaType = new MediaType("application", "vnd.ais.admin.organization+xml", version);
 		headers.setContentType(mediaType);
 		headers.add("Accept-Charset", "UTF-8");
-		headers.add("Accept", "application/vnd.ais.v1+xml,application/json");
+		headers.add("Accept", "application/vnd.ais.admin.organization+xml;version=1.0, application/json");
 		
 		HttpEntity<String> request = new HttpEntity<>(body, headers);
-		ResponseEntity<String> response = this.restTemplate.postForEntity("http://localhost:" + port + "/orgs", request, String.class);
+		ResponseEntity<String> response = this.restTemplate.withBasicAuth("admin", "admin").postForEntity("http://localhost:" + port + "/api/admin/orgs", request, String.class);
 					
 		assertThat(response.getStatusCode()).isEqualByComparingTo(HttpStatus.NOT_FOUND);
 	}
@@ -114,13 +123,16 @@ public class LazybeeApplicationTests {
 		String body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><organization orderId=\"09101010102939\" caNumber=\"90111045678\" orderType=\"trial\" shortName=\"VMED\" xmlns=\"http://enterprisecloud.ais.co.th/bot\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><users><user email=\"john.doe@virgin.com\" fullName=\"John Doe\" phone=\"0613952200\" /></users><vms><vm coresPerSocket=\"2\" memorySize=\"4\" noOfCpus=\"2\" nonMobileNumber=\"1234567890\" osImageName=\"CENTOS7\" /></vms></organization>";
 		
 		HttpHeaders headers = new HttpHeaders();
-		MediaType mediaType = new MediaType("application", "vnd.ais.v1+xml");
+		Map<String,String> version = new HashMap<String,String>();
+		version.put("version", "1.0");
+		
+		MediaType mediaType = new MediaType("application", "vnd.ais.admin.organization+xml", version);
 		headers.setContentType(mediaType);
 		headers.add("Accept-Charset", "UTF-8");
-		headers.add("Accept", "application/vnd.ais.v1+xml,application/json");
+		headers.add("Accept", "application/vnd.ais.admin.organization+xml;version=1.0, application/json");
 		
 		HttpEntity<String> request = new HttpEntity<>(body, headers);
-		ResponseEntity<String> response = this.restTemplate.postForEntity("http://localhost:" + port + "/orgs", request, String.class);
+		ResponseEntity<String> response = this.restTemplate.withBasicAuth("admin", "admin").postForEntity("http://localhost:" + port + "/api/admin/orgs", request, String.class);
 					
 		assertThat(response.getStatusCode()).isEqualByComparingTo(HttpStatus.NOT_FOUND);
 	}
@@ -130,13 +142,16 @@ public class LazybeeApplicationTests {
 		String body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><organization name=\"Virgin Media Limited\" orderId=\"09101010102939\" caNumber=\"90111045678\" shortName=\"VMED\" xmlns=\"http://enterprisecloud.ais.co.th/bot\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><users><user email=\"john.doe@virgin.com\" fullName=\"John Doe\" phone=\"0613952200\" /></users><vms><vm coresPerSocket=\"2\" memorySize=\"4\" noOfCpus=\"2\" nonMobileNumber=\"1234567890\" osImageName=\"CENTOS7\" /></vms></organization>";
 		
 		HttpHeaders headers = new HttpHeaders();
-		MediaType mediaType = new MediaType("application", "vnd.ais.v1+xml");
+		Map<String,String> version = new HashMap<String,String>();
+		version.put("version", "1.0");
+		
+		MediaType mediaType = new MediaType("application", "vnd.ais.admin.organization+xml", version);
 		headers.setContentType(mediaType);
 		headers.add("Accept-Charset", "UTF-8");
-		headers.add("Accept", "application/vnd.ais.v1+xml,application/json");
+		headers.add("Accept", "application/vnd.ais.admin.organization+xml;version=1.0, application/json");
 		
 		HttpEntity<String> request = new HttpEntity<>(body, headers);
-		ResponseEntity<String> response = this.restTemplate.postForEntity("http://localhost:" + port + "/orgs", request, String.class);
+		ResponseEntity<String> response = this.restTemplate.withBasicAuth("admin", "admin").postForEntity("http://localhost:" + port + "/api/admin/orgs", request, String.class);
 					
 		assertThat(response.getStatusCode()).isEqualByComparingTo(HttpStatus.NOT_FOUND);
 	}
@@ -146,15 +161,18 @@ public class LazybeeApplicationTests {
 		String body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><organization name=\"Virgin Media Limited\" orderId=\"09101010102939\" caNumber=\"90111045678\" orderType=\"tryal\" shortName=\"VMED\" xmlns=\"http://enterprisecloud.ais.co.th/bot\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><users><user email=\"john.doe@virgin.com\" fullName=\"John Doe\" phone=\"0613952200\" /></users><vms><vm coresPerSocket=\"2\" memorySize=\"4\" noOfCpus=\"2\" nonMobileNumber=\"1234567890\" osImageName=\"CENTOS7\" /></vms></organization>";
 		
 		HttpHeaders headers = new HttpHeaders();
-		MediaType mediaType = new MediaType("application", "vnd.ais.v1+xml");
+		Map<String,String> version = new HashMap<String,String>();
+		version.put("version", "1.0");
+		
+		MediaType mediaType = new MediaType("application", "vnd.ais.admin.organization+xml", version);
 		headers.setContentType(mediaType);
 		headers.add("Accept-Charset", "UTF-8");
-		headers.add("Accept", "application/vnd.ais.v1+xml,application/json");
+		headers.add("Accept", "application/vnd.ais.admin.organization+xml;version=1.0, application/json");
 		
 		HttpEntity<String> request = new HttpEntity<>(body, headers);
-		ResponseEntity<String> response = this.restTemplate.postForEntity("http://localhost:" + port + "/orgs", request, String.class);
+		ResponseEntity<String> response = this.restTemplate.withBasicAuth("admin", "admin").postForEntity("http://localhost:" + port + "/api/admin/orgs", request, String.class);
 					
-		assertThat(response.getStatusCode()).isEqualByComparingTo(HttpStatus.NOT_FOUND);
+		assertThat(response.getStatusCode()).isEqualByComparingTo(HttpStatus.BAD_REQUEST);
 	}
 	
 	@Test
@@ -162,13 +180,16 @@ public class LazybeeApplicationTests {
 		String body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><organization name=\"Virgin Media Limited\" orderId=\"09101010102939\" caNumber=\"90111045678\" orderType=\"trial\" xmlns=\"http://enterprisecloud.ais.co.th/bot\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><users><user email=\"john.doe@virgin.com\" fullName=\"John Doe\" phone=\"0613952200\" /></users><vms><vm coresPerSocket=\"2\" memorySize=\"4\" noOfCpus=\"2\" nonMobileNumber=\"1234567890\" osImageName=\"CENTOS7\" /></vms></organization>";
 		
 		HttpHeaders headers = new HttpHeaders();
-		MediaType mediaType = new MediaType("application", "vnd.ais.v1+xml");
+		Map<String,String> version = new HashMap<String,String>();
+		version.put("version", "1.0");
+		
+		MediaType mediaType = new MediaType("application", "vnd.ais.admin.organization+xml", version);
 		headers.setContentType(mediaType);
 		headers.add("Accept-Charset", "UTF-8");
-		headers.add("Accept", "application/vnd.ais.v1+xml,application/json");
+		headers.add("Accept", "application/vnd.ais.admin.organization+xml;version=1.0, application/json");
 		
 		HttpEntity<String> request = new HttpEntity<>(body, headers);
-		ResponseEntity<String> response = this.restTemplate.postForEntity("http://localhost:" + port + "/orgs", request, String.class);
+		ResponseEntity<String> response = this.restTemplate.withBasicAuth("admin", "admin").postForEntity("http://localhost:" + port + "/api/admin/orgs", request, String.class);
 					
 		assertThat(response.getStatusCode()).isEqualByComparingTo(HttpStatus.NOT_FOUND);
 	}
@@ -178,13 +199,16 @@ public class LazybeeApplicationTests {
 		String body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><organization name=\"Virgin Media Limited\" orderId=\"09101010102939\" caNumber=\"90111045678\" orderType=\"trial\" shortName=\"VMED\" xmlns=\"http://enterprisecloud.ais.co.th/bot\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><vms><vm coresPerSocket=\"2\" memorySize=\"4\" noOfCpus=\"2\" nonMobileNumber=\"1234567890\" osImageName=\"CENTOS7\" /></vms></organization>";
 
 		HttpHeaders headers = new HttpHeaders();
-		MediaType mediaType = new MediaType("application", "vnd.ais.v1+xml");
+		Map<String,String> version = new HashMap<String,String>();
+		version.put("version", "1.0");
+		
+		MediaType mediaType = new MediaType("application", "vnd.ais.admin.organization+xml", version);
 		headers.setContentType(mediaType);
 		headers.add("Accept-Charset", "UTF-8");
-		headers.add("Accept", "application/vnd.ais.v1+xml,application/json");
+		headers.add("Accept", "application/vnd.ais.admin.organization+xml;version=1.0, application/json");
 		
 		HttpEntity<String> request = new HttpEntity<>(body, headers);
-		ResponseEntity<String> response = this.restTemplate.postForEntity("http://localhost:" + port + "/orgs", request, String.class);
+		ResponseEntity<String> response = this.restTemplate.withBasicAuth("admin", "admin").postForEntity("http://localhost:" + port + "/api/admin/orgs", request, String.class);
 					
 		assertThat(response.getStatusCode()).isEqualByComparingTo(HttpStatus.NOT_FOUND);
 	}
@@ -194,13 +218,16 @@ public class LazybeeApplicationTests {
 		String body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><organization name=\"Virgin Media Limited\" orderId=\"09101010102939\" caNumber=\"90111045678\" orderType=\"trial\" shortName=\"VMED\" xmlns=\"http://enterprisecloud.ais.co.th/bot\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><users></users><vms><vm coresPerSocket=\"2\" memorySize=\"4\" noOfCpus=\"2\" nonMobileNumber=\"1234567890\" osImageName=\"CENTOS7\" /></vms></organization>";
 		
 		HttpHeaders headers = new HttpHeaders();
-		MediaType mediaType = new MediaType("application", "vnd.ais.v1+xml");
+		Map<String,String> version = new HashMap<String,String>();
+		version.put("version", "1.0");
+		
+		MediaType mediaType = new MediaType("application", "vnd.ais.admin.organization+xml", version);
 		headers.setContentType(mediaType);
 		headers.add("Accept-Charset", "UTF-8");
-		headers.add("Accept", "application/vnd.ais.v1+xml,application/json");
+		headers.add("Accept", "application/vnd.ais.admin.organization+xml;version=1.0, application/json");
 		
 		HttpEntity<String> request = new HttpEntity<>(body, headers);
-		ResponseEntity<String> response = this.restTemplate.postForEntity("http://localhost:" + port + "/orgs", request, String.class);
+		ResponseEntity<String> response = this.restTemplate.withBasicAuth("admin", "admin").postForEntity("http://localhost:" + port + "/api/admin/orgs", request, String.class);
 					
 		assertThat(response.getStatusCode()).isEqualByComparingTo(HttpStatus.NOT_FOUND);
 	}
@@ -210,15 +237,37 @@ public class LazybeeApplicationTests {
 		String body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><organization name=\"Virgin Media Limited\" orderId=\"09101010102939\" caNumber=\"90111045678\" orderType=\"trial\" shortName=\"VMED\" xmlns=\"http://enterprisecloud.ais.co.th/bot\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><users><user fullName=\"John Doe\" phone=\"0613952200\" /></users><vms><vm coresPerSocket=\"2\" memorySize=\"4\" noOfCpus=\"2\" nonMobileNumber=\"1234567890\" osImageName=\"CENTOS7\" /></vms></organization>";
 		
 		HttpHeaders headers = new HttpHeaders();
-		MediaType mediaType = new MediaType("application", "vnd.ais.v1+xml");
+		Map<String,String> version = new HashMap<String,String>();
+		version.put("version", "1.0");
+		
+		MediaType mediaType = new MediaType("application", "vnd.ais.admin.organization+xml", version);
 		headers.setContentType(mediaType);
 		headers.add("Accept-Charset", "UTF-8");
-		headers.add("Accept", "application/vnd.ais.v1+xml,application/json");
+		headers.add("Accept", "application/vnd.ais.admin.organization+xml;version=1.0, application/json");
 		
 		HttpEntity<String> request = new HttpEntity<>(body, headers);
-		ResponseEntity<String> response = this.restTemplate.postForEntity("http://localhost:" + port + "/orgs", request, String.class);
+		ResponseEntity<String> response = this.restTemplate.withBasicAuth("admin", "admin").postForEntity("http://localhost:" + port + "/api/admin/orgs", request, String.class);
 					
 		assertThat(response.getStatusCode()).isEqualByComparingTo(HttpStatus.NOT_FOUND);
+	}
+	
+	@Test
+	public void invalidUserEmailFormatTest(){
+		String body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><organization name=\"Virgin Media Limited\" orderId=\"09101010102939\" caNumber=\"90111045678\" orderType=\"trial\" shortName=\"VMED\" xmlns=\"http://enterprisecloud.ais.co.th/bot\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><users><user email=\"john.doevirgin.com\" fullName=\"John Doe\" phone=\"0613952200\" /></users><vms><vm coresPerSocket=\"2\" memorySize=\"4\" noOfCpus=\"2\" nonMobileNumber=\"1234567890\" osImageName=\"CENTOS7\" /></vms></organization>";
+		
+		HttpHeaders headers = new HttpHeaders();
+		Map<String,String> version = new HashMap<String,String>();
+		version.put("version", "1.0");
+		
+		MediaType mediaType = new MediaType("application", "vnd.ais.admin.organization+xml", version);
+		headers.setContentType(mediaType);
+		headers.add("Accept-Charset", "UTF-8");
+		headers.add("Accept", "application/vnd.ais.admin.organization+xml;version=1.0, application/json");
+		
+		HttpEntity<String> request = new HttpEntity<>(body, headers);
+		ResponseEntity<String> response = this.restTemplate.withBasicAuth("admin", "admin").postForEntity("http://localhost:" + port + "/api/admin/orgs", request, String.class);
+					
+		assertThat(response.getStatusCode()).isEqualByComparingTo(HttpStatus.BAD_REQUEST);
 	}
 	
 	@Test
@@ -226,13 +275,16 @@ public class LazybeeApplicationTests {
 		String body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><organization name=\"Virgin Media Limited\" orderId=\"09101010102939\" caNumber=\"90111045678\" orderType=\"trial\" shortName=\"VMED\" xmlns=\"http://enterprisecloud.ais.co.th/bot\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><users><user email=\"john.doe@virgin.com\" phone=\"0613952200\" /></users><vms><vm coresPerSocket=\"2\" memorySize=\"4\" noOfCpus=\"2\" nonMobileNumber=\"1234567890\" osImageName=\"CENTOS7\" /></vms></organization>";
 		
 		HttpHeaders headers = new HttpHeaders();
-		MediaType mediaType = new MediaType("application", "vnd.ais.v1+xml");
+		Map<String,String> version = new HashMap<String,String>();
+		version.put("version", "1.0");
+		
+		MediaType mediaType = new MediaType("application", "vnd.ais.admin.organization+xml", version);
 		headers.setContentType(mediaType);
 		headers.add("Accept-Charset", "UTF-8");
 		headers.add("Accept", "application/vnd.ais.v1+xml, application/json");
 		
 		HttpEntity<String> request = new HttpEntity<>(body, headers);
-		ResponseEntity<String> response = this.restTemplate.postForEntity("http://localhost:" + port + "/orgs", request, String.class);
+		ResponseEntity<String> response = this.restTemplate.withBasicAuth("admin", "admin").postForEntity("http://localhost:" + port + "/api/admin/orgs", request, String.class);
 					
 		assertThat(response.getStatusCode()).isEqualByComparingTo(HttpStatus.NOT_FOUND);
 	}
@@ -243,13 +295,16 @@ public class LazybeeApplicationTests {
 		
 		
 		HttpHeaders headers = new HttpHeaders();
-		MediaType mediaType = new MediaType("application", "vnd.ais.v1+xml");
+		Map<String,String> version = new HashMap<String,String>();
+		version.put("version", "1.0");
+		
+		MediaType mediaType = new MediaType("application", "vnd.ais.admin.organization+xml", version);
 		headers.setContentType(mediaType);
 		headers.add("Accept-Charset", "UTF-8");
-		headers.add("Accept", "application/vnd.ais.v1+xml,application/json");
+		headers.add("Accept", "application/vnd.ais.admin.organization+xml;version=1.0, application/json");
 		
 		HttpEntity<String> request = new HttpEntity<>(body, headers);
-		ResponseEntity<String> response = this.restTemplate.postForEntity("http://localhost:" + port + "/orgs", request, String.class);
+		ResponseEntity<String> response = this.restTemplate.withBasicAuth("admin", "admin").postForEntity("http://localhost:" + port + "/api/admin/orgs", request, String.class);
 					
 		assertThat(response.getStatusCode()).isEqualByComparingTo(HttpStatus.NOT_FOUND);
 	}
@@ -259,13 +314,16 @@ public class LazybeeApplicationTests {
 		String body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><organization name=\"Virgin Media Limited\" orderId=\"09101010102939\" caNumber=\"90111045678\" orderType=\"trial\" shortName=\"VMED\" xmlns=\"http://enterprisecloud.ais.co.th/bot\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><users><user email=\"john.doe@virgin.com\" fullName=\"John Doe\" phone=\"0613952200\" /></users><vms></vms></organization>";
 		
 		HttpHeaders headers = new HttpHeaders();
-		MediaType mediaType = new MediaType("application", "vnd.ais.v1+xml");
+		Map<String,String> version = new HashMap<String,String>();
+		version.put("version", "1.0");
+		
+		MediaType mediaType = new MediaType("application", "vnd.ais.admin.organization+xml", version);
 		headers.setContentType(mediaType);
 		headers.add("Accept-Charset", "UTF-8");
-		headers.add("Accept", "application/vnd.ais.v1+xml,application/json");
+		headers.add("Accept", "application/vnd.ais.admin.organization+xml;version=1.0, application/json");
 		
 		HttpEntity<String> request = new HttpEntity<>(body, headers);
-		ResponseEntity<String> response = this.restTemplate.postForEntity("http://localhost:" + port + "/orgs", request, String.class);
+		ResponseEntity<String> response = this.restTemplate.withBasicAuth("admin", "admin").postForEntity("http://localhost:" + port + "/api/admin/orgs", request, String.class);
 					
 		assertThat(response.getStatusCode()).isEqualByComparingTo(HttpStatus.NOT_FOUND);
 	}	
@@ -273,16 +331,18 @@ public class LazybeeApplicationTests {
 	@Test
 	public void missingVmCoresPerSocketTest(){
 		String body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><organization name=\"Virgin Media Limited\" orderId=\"09101010102939\" caNumber=\"90111045678\" orderType=\"trial\" shortName=\"VMED\" xmlns=\"http://enterprisecloud.ais.co.th/bot\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><users><user email=\"john.doe@virgin.com\" fullName=\"John Doe\" phone=\"0613952200\" /></users><vms><vm memorySize=\"4\" noOfCpus=\"2\" nonMobileNumber=\"1234567890\" osImageName=\"CENTOS7\" /></vms></organization>";
-		
-		
+			
 		HttpHeaders headers = new HttpHeaders();
-		MediaType mediaType = new MediaType("application", "vnd.ais.v1+xml");
+		Map<String,String> version = new HashMap<String,String>();
+		version.put("version", "1.0");
+		
+		MediaType mediaType = new MediaType("application", "vnd.ais.admin.organization+xml", version);
 		headers.setContentType(mediaType);
 		headers.add("Accept-Charset", "UTF-8");
-		headers.add("Accept", "application/vnd.ais.v1+xml,application/json");
+		headers.add("Accept", "application/vnd.ais.admin.organization+xml;version=1.0, application/json");
 		
 		HttpEntity<String> request = new HttpEntity<>(body, headers);
-		ResponseEntity<String> response = this.restTemplate.postForEntity("http://localhost:" + port + "/orgs", request, String.class);
+		ResponseEntity<String> response = this.restTemplate.withBasicAuth("admin", "admin").postForEntity("http://localhost:" + port + "/api/admin/orgs", request, String.class);
 					
 		assertThat(response.getStatusCode()).isEqualByComparingTo(HttpStatus.NOT_FOUND);
 	}
@@ -292,13 +352,16 @@ public class LazybeeApplicationTests {
 		String body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><organization name=\"Virgin Media Limited\" orderId=\"09101010102939\" caNumber=\"90111045678\" orderType=\"trial\" shortName=\"VMED\" xmlns=\"http://enterprisecloud.ais.co.th/bot\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><users><user email=\"john.doe@virgin.com\" fullName=\"John Doe\" phone=\"0613952200\" /></users><vms><vm coresPerSocket=\"2\" memorySize=\"4\" nonMobileNumber=\"1234567890\" osImageName=\"CENTOS7\" /></vms></organization>";
 				
 		HttpHeaders headers = new HttpHeaders();
-		MediaType mediaType = new MediaType("application", "vnd.ais.v1+xml");
+		Map<String,String> version = new HashMap<String,String>();
+		version.put("version", "1.0");
+		
+		MediaType mediaType = new MediaType("application", "vnd.ais.admin.organization+xml", version);
 		headers.setContentType(mediaType);
 		headers.add("Accept-Charset", "UTF-8");
-		headers.add("Accept", "application/vnd.ais.v1+xml,application/json");
+		headers.add("Accept", "application/vnd.ais.admin.organization+xml;version=1.0, application/json");
 		
 		HttpEntity<String> request = new HttpEntity<>(body, headers);
-		ResponseEntity<String> response = this.restTemplate.postForEntity("http://localhost:" + port + "/orgs", request, String.class);
+		ResponseEntity<String> response = this.restTemplate.withBasicAuth("admin", "admin").postForEntity("http://localhost:" + port + "/api/admin/orgs", request, String.class);
 					
 		assertThat(response.getStatusCode()).isEqualByComparingTo(HttpStatus.NOT_FOUND);
 	}	
@@ -308,13 +371,16 @@ public class LazybeeApplicationTests {
 		String body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><organization name=\"Virgin Media Limited\" orderId=\"09101010102939\" caNumber=\"90111045678\" orderType=\"trial\" shortName=\"VMED\" xmlns=\"http://enterprisecloud.ais.co.th/bot\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><users><user email=\"john.doe@virgin.com\" fullName=\"John Doe\" phone=\"0613952200\" /></users><vms><vm coresPerSocket=\"2\" noOfCpus=\"2\" nonMobileNumber=\"1234567890\" osImageName=\"CENTOS7\" /></vms></organization>";
 				
 		HttpHeaders headers = new HttpHeaders();
-		MediaType mediaType = new MediaType("application", "vnd.ais.v1+xml");
+		Map<String,String> version = new HashMap<String,String>();
+		version.put("version", "1.0");
+		
+		MediaType mediaType = new MediaType("application", "vnd.ais.admin.organization+xml", version);
 		headers.setContentType(mediaType);
 		headers.add("Accept-Charset", "UTF-8");
-		headers.add("Accept", "application/vnd.ais.v1+xml,application/json");
+		headers.add("Accept", "application/vnd.ais.admin.organization+xml;version=1.0, application/json");
 		
 		HttpEntity<String> request = new HttpEntity<>(body, headers);
-		ResponseEntity<String> response = this.restTemplate.postForEntity("http://localhost:" + port + "/orgs", request, String.class);
+		ResponseEntity<String> response = this.restTemplate.withBasicAuth("admin", "admin").postForEntity("http://localhost:" + port + "/api/admin/orgs", request, String.class);
 					
 		assertThat(response.getStatusCode()).isEqualByComparingTo(HttpStatus.NOT_FOUND);
 	}
@@ -324,13 +390,16 @@ public class LazybeeApplicationTests {
 		String body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><organization name=\"Virgin Media Limited\" orderId=\"09101010102939\" caNumber=\"90111045678\" orderType=\"trial\" shortName=\"VMED\" xmlns=\"http://enterprisecloud.ais.co.th/bot\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><users><user email=\"john.doe@virgin.com\" fullName=\"John Doe\" phone=\"0613952200\" /></users><vms><vm coresPerSocket=\"2\" memorySize=\"4\" noOfCpus=\"2\" nonMobileNumber=\"1234567890\"/></vms></organization>";
 				
 		HttpHeaders headers = new HttpHeaders();
-		MediaType mediaType = new MediaType("application", "vnd.ais.v1+xml");
+		Map<String,String> version = new HashMap<String,String>();
+		version.put("version", "1.0");
+		
+		MediaType mediaType = new MediaType("application", "vnd.ais.admin.organization+xml", version);
 		headers.setContentType(mediaType);
 		headers.add("Accept-Charset", "UTF-8");
-		headers.add("Accept", "application/vnd.ais.v1+xml,application/json");
+		headers.add("Accept", "application/vnd.ais.admin.organization+xml;version=1.0, application/json");
 		
 		HttpEntity<String> request = new HttpEntity<>(body, headers);
-		ResponseEntity<String> response = this.restTemplate.postForEntity("http://localhost:" + port + "/orgs", request, String.class);
+		ResponseEntity<String> response = this.restTemplate.withBasicAuth("admin", "admin").postForEntity("http://localhost:" + port + "/api/admin/orgs", request, String.class);
 					
 		assertThat(response.getStatusCode()).isEqualByComparingTo(HttpStatus.NOT_FOUND);
 	}	
@@ -340,15 +409,36 @@ public class LazybeeApplicationTests {
 		String body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><organization name=\"Virgin Media Limited\" orderId=\"09101010102939\" caNumber=\"90111045678\" orderType=\"trial\" shortName=\"VMED\" xmlns=\"http://enterprisecloud.ais.co.th/bot\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><users><user email=\"john.doe@virgin.com\" fullName=\"John Doe\" phone=\"0613952200\" /></users><vms><vm coresPerSocket=\"2\" memorySize=\"4\" noOfCpus=\"2\" osImageName=\"CENTOS7\" /></vms></organization>";
 				
 		HttpHeaders headers = new HttpHeaders();
-		MediaType mediaType = new MediaType("application", "vnd.ais.v1+xml");
+		Map<String,String> version = new HashMap<String,String>();
+		version.put("version", "1.0");
+		
+		MediaType mediaType = new MediaType("application", "vnd.ais.admin.organization+xml", version);
 		headers.setContentType(mediaType);
 		headers.add("Accept-Charset", "UTF-8");
-		headers.add("Accept", "application/vnd.ais.v1+xml,application/json");
+		headers.add("Accept", "application/vnd.ais.admin.organization+xml;version=1.0, application/json");
 		
 		HttpEntity<String> request = new HttpEntity<>(body, headers);
-		ResponseEntity<String> response = this.restTemplate.postForEntity("http://localhost:" + port + "/orgs", request, String.class);
+		ResponseEntity<String> response = this.restTemplate.withBasicAuth("admin", "admin").postForEntity("http://localhost:" + port + "/api/admin/orgs", request, String.class);
 					
 		assertThat(response.getStatusCode()).isEqualByComparingTo(HttpStatus.NOT_FOUND);
 	}	
-		
+	
+	@Test
+	public void isOrgExistTest() {
+
+		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("http://localhost:" + port + "/api/orgs/query").queryParam("name", "MyORG");
+		HttpHeaders headers = new HttpHeaders();
+
+		headers.add("Accept-Charset", "UTF-8");
+		headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
+
+		HttpEntity<String> request = new HttpEntity<>(headers);
+		ResponseEntity<String> response = this.restTemplate.withBasicAuth("admin", "admin")
+				.exchange(builder.build().encode().toUri(), HttpMethod.GET, request, String.class);
+
+		logger.info("Body: " + response.getBody());
+
+		assertThat(response.getStatusCode()).isEqualByComparingTo(HttpStatus.OK);
+		assertFalse(Boolean.valueOf(response.getBody()));
+	}
 }

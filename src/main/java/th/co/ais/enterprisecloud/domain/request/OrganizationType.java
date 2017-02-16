@@ -252,4 +252,10 @@ public class OrganizationType {
         this.shortName = value;
     }
 
+	@Override
+	public String toString() {
+		return "OrganizationType [getUsers()=" + getUsers() + ", getVms()=" + getVms() + ", getOrderId()="
+				+ getOrderId() + ", getName()=" + getName() + ", getOrderType()=" + getOrderType() + ", getCaNumber()="
+				+ getCaNumber() + ", getShortName()=" + getShortName() + "]";
+	}    
 }

@@ -45,7 +45,8 @@ public class ProvisioningController {
 			throws VCloudException, TimeoutException, InterruptedException, ExecutionException {
 		
 		logger.debug("calling service.provisioning()");
-				
+		logger.info(req.toString());
+		
 		validator.validate(req);
 			
 		th.co.ais.enterprisecloud.domain.OrganizationType org = dtoUtils.transfer(req);

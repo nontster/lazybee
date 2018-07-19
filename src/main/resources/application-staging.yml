@@ -1,0 +1,6 @@
+server:
+  port: 8443
+  ssl:
+    key-store:  classpath:dev-enact_intra_ais.jks
+    key-store-password: CPTdK5Lb
+    key-password: CPTdK5Lb

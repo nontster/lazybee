@@ -1,6 +1,6 @@
 FROM frolvlad/alpine-oraclejdk8:slim
 VOLUME /tmp
-ADD lazybee-1.0.0-SNAPSHOT.jar app.jar
+ADD lazybee-1.0.1-SNAPSHOT.jar app.jar
 RUN sh -c 'touch /app.jar'
 RUN apk --update add tzdata
 ENV TZ=Asia/Bangkok

@@ -250,6 +250,9 @@ public class VappUtils {
 						vmType.setDescription(descBuff.toString());
 					}
 					
+					// clear StringBuffer
+					descBuff.delete(0, descBuff.length());
+					
 					vm.updateVM(vmType).waitForTask(0);
 
 					// Set administrator password

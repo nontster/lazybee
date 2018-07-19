@@ -42,6 +42,7 @@ import com.vmware.vcloud.sdk.constants.query.ExpressionType;
 import com.vmware.vcloud.sdk.constants.query.QueryReferenceField;
 import com.vmware.vcloud.sdk.constants.query.QueryReferenceType;
 
+import th.co.ais.enterprisecloud.domain.VmType;
 import th.co.ais.enterprisecloud.exception.InvalidParameterException;
 import th.co.ais.enterprisecloud.utils.NetworkUtils;
 import th.co.ais.enterprisecloud.utils.OrgUtils;
@@ -51,7 +52,7 @@ import th.co.ais.enterprisecloud.utils.VcloudProperties;
 import th.co.ais.enterprisecloud.utils.VdcUtils;
 
 @Service
-@Profile("!staging")
+@Profile("!dev")
 public class VCloudDirectorService implements CloudService {
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -79,14 +80,12 @@ public class VCloudDirectorService implements CloudService {
 		this.networkUtils = networkUtils;
 		this.vappUtils = vappUtils;
 		this.prop = prop;
-		
-		this.client = new VcloudClient(prop.getUrl(), Version.V5_5);
 	}
 
 	@Override
 	public void connect() throws VCloudException {
-		// TODO Auto-generated method stub
 		
+		logger.debug("username:password - " + prop.getUsername() + ":" + prop.getPassword());
 		this.client.login(prop.getUsername(), prop.getPassword());
 		logger.info("Success sigin to vCloud Director : "+prop.getUrl());
 		
@@ -113,8 +112,12 @@ public class VCloudDirectorService implements CloudService {
 	
 		th.co.ais.enterprisecloud.domain.response.OrganizationType res = new th.co.ais.enterprisecloud.domain.response.OrganizationType();
 	
-		if(!this.client.extendSession())
+		if(this.client == null){		
+			this.client = new VcloudClient(prop.getUrl(), Version.V5_5);
 			connect();
+		} else if(!this.client.extendSession()){
+			connect();
+		}
 		
 		adminOrg = admin.createAdminOrg(orgUtils.createNewAdminOrgType(org));
 		Task task = orgUtils.returnTask(client, adminOrg);
@@ -263,9 +266,9 @@ public class VCloudDirectorService implements CloudService {
 				rNatRule.setNetworkName(interfaceName);
 				rNatRule.setOriginalIp(originalIp);
 				rNatRule.setOriginalPort(originalPort);
-				rNatRule.setProtocol(translatedIp);
-				rNatRule.setTranslatedIp(translatedPort);
-				rNatRule.setTranslatedPort(protocol);
+				rNatRule.setProtocol(protocol);
+				rNatRule.setTranslatedIp(translatedIp);
+				rNatRule.setTranslatedPort(translatedPort);
 				rNatRule.setType(natRuleType);
 			}
 
@@ -304,6 +307,13 @@ public class VCloudDirectorService implements CloudService {
 				}
 			}
 	
+			// Set non-mobile number
+			for(VmType orgVm : org.getvApp().getVms()){
+				if(vm.getResource().getName().equalsIgnoreCase(orgVm.getName())){
+					rVm.setNonMobileNumber(orgVm.getNonMobileNo());
+				}
+			}
+			
 			Credential cred = getCredential(vm);
 			
 			rVm.setOsName(vm.getOperatingSystemSection().getDescription().getValue());

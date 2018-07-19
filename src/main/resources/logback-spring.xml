@@ -20,7 +20,7 @@
 	</springProfile>
 
 	<springProfile name="production">
-		<logger name="th.co.ais.enterprisecloud" level="WARN"
+		<logger name="th.co.ais.enterprisecloud" level="INFO"
 			additivity="false">
 			<appender-ref ref="FILE" />
 		</logger>

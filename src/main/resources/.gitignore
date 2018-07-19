@@ -2,3 +2,5 @@
 /keystore.jks
 /application-dev.yml
 /application-production.yml
+/enact_intra_ais.jks
+/dev-enact_intra_ais.jks

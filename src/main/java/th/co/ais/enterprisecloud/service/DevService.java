@@ -19,13 +19,13 @@ import th.co.ais.enterprisecloud.domain.VmType;
 import th.co.ais.enterprisecloud.utils.NetworkUtils;
 
 @Service
-@Profile("staging")
-public class StagingService implements CloudService {
+@Profile("dev")
+public class DevService implements CloudService {
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	private NetworkUtils networkUtils;
 		
-	public StagingService(NetworkUtils networkUtils) {
+	public DevService(NetworkUtils networkUtils) {
 		super();
 		this.networkUtils = networkUtils;
 	}
@@ -33,13 +33,13 @@ public class StagingService implements CloudService {
 	@Override
 	public void connect() throws VCloudException {
 		// TODO Auto-generated method stub
-		logger.info("StagingService.connect() called");
+		logger.info("DevService.connect() called");
 	}
 
 	@Override
 	public void disconnect() throws VCloudException {
 		// TODO Auto-generated method stub
-		logger.info("StagingService.disconnect() called");
+		logger.info("DevService.disconnect() called");
 		logger.info("disconnected from vcloud director");
 	}
 
@@ -54,7 +54,7 @@ public class StagingService implements CloudService {
 	public Future<th.co.ais.enterprisecloud.domain.response.OrganizationType> provisioning(OrganizationType in)
 			throws VCloudException, TimeoutException {
 		
-		logger.info("StagingService.provisioning() called");
+		logger.info("DevService.provisioning() called");
 		
 		th.co.ais.enterprisecloud.domain.response.OrganizationType res = new th.co.ais.enterprisecloud.domain.response.OrganizationType();
 		
@@ -72,16 +72,24 @@ public class StagingService implements CloudService {
 		th.co.ais.enterprisecloud.domain.response.FirewallServiceType rFirewallService = new th.co.ais.enterprisecloud.domain.response.FirewallServiceType();
 		th.co.ais.enterprisecloud.domain.response.FirewallRulesType rFirewallRules = new th.co.ais.enterprisecloud.domain.response.FirewallRulesType();
 				
-		th.co.ais.enterprisecloud.domain.response.FirewallRuleType rFirewallRule = new th.co.ais.enterprisecloud.domain.response.FirewallRuleType();
-					
-		rFirewallRule.setName("HTTP OUT");
-		rFirewallRule.setSourceIp("10.1.1.0/24");
-		rFirewallRule.setSourcePort("Any");
-		rFirewallRule.setDestinationIp("Any");
-		rFirewallRule.setDestinationPortRange("80");
-		rFirewallRule.setProtocol("TCP");
+		th.co.ais.enterprisecloud.domain.response.FirewallRuleType rFirewallRule1 = new th.co.ais.enterprisecloud.domain.response.FirewallRuleType();
+		th.co.ais.enterprisecloud.domain.response.FirewallRuleType rFirewallRule2 = new th.co.ais.enterprisecloud.domain.response.FirewallRuleType();
+
+		rFirewallRule1.setName("ICMP IN");
+		rFirewallRule1.setSourceIp("Any");
+		rFirewallRule1.setSourcePort("Any");
+		rFirewallRule1.setDestinationIp("internal");
+		rFirewallRule1.setProtocol("ICMP");
+		
+		rFirewallRule2.setName("HTTP OUT");
+		rFirewallRule2.setSourceIp("10.1.1.0/24");
+		rFirewallRule2.setSourcePort("Any");
+		rFirewallRule2.setDestinationIp("Any");
+		rFirewallRule2.setDestinationPortRange("80");
+		rFirewallRule2.setProtocol("TCP");
 	
-		rFirewallRules.getRule().add(rFirewallRule);
+		rFirewallRules.getRule().add(rFirewallRule1);
+		rFirewallRules.getRule().add(rFirewallRule2);
 				
 		rFirewallService.setRules(rFirewallRules);		
 		rNetworkServices.setFirewallService(rFirewallService);
@@ -93,20 +101,25 @@ public class StagingService implements CloudService {
 
 		th.co.ais.enterprisecloud.domain.response.NatRuleType rNatRule1 = new th.co.ais.enterprisecloud.domain.response.NatRuleType();
 		th.co.ais.enterprisecloud.domain.response.NatRuleType rNatRule2 = new th.co.ais.enterprisecloud.domain.response.NatRuleType();
-							
-		rNatRule1.setDescription("DNAT");
+
+		rNatRule1.setDescription("SNAT Rule");
 		rNatRule1.setNetworkName("Tenant-External-Internet03");
-		rNatRule1.setOriginalIp("103.20.205.250");
+		rNatRule1.setOriginalIp("10.1.1.11");
 		rNatRule1.setOriginalPort("Any");
-		rNatRule1.setProtocol("10.1.1.11");
-		rNatRule1.setTranslatedIp("Any");
-		rNatRule1.setTranslatedPort("Any");
-		rNatRule1.setType("DNAT");
-								
-		rNatRule1.setDescription("SNAT");
-		rNatRule1.setNetworkName("Tenant-External-Internet03");
+		rNatRule1.setProtocol("Any");
 		rNatRule1.setTranslatedIp("103.20.205.250");
-			
+		rNatRule1.setTranslatedPort("Any");
+		rNatRule1.setType("SNAT");
+		
+		rNatRule2.setDescription("DNAT Rule");
+		rNatRule2.setNetworkName("Tenant-External-Internet03");
+		rNatRule2.setOriginalIp("103.20.205.250");
+		rNatRule2.setOriginalPort("Any");
+		rNatRule2.setProtocol("Any");
+		rNatRule2.setTranslatedIp("10.1.1.11");
+		rNatRule2.setTranslatedPort("Any");
+		rNatRule2.setType("DNAT");
+											
 		rNatRules.getRule().add(rNatRule1);
 		rNatRules.getRule().add(rNatRule2);
 		
